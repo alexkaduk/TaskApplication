@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TaskApplication.Models.SubTask>
+
+@{
+    ViewBag.Title = "Issue sub-task";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SubTaskName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubTaskDescrioption)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubTaskName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubTaskDescrioption)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status.StatusName)
+        </td>
+        <td>
+            @{  if (item.Status.StatusName == "Open")
+                {
+                    @Html.ActionLink("Resolve", "Edit", new { id=item.SubTaskId });
+                }
+                else
+                {
+                    @Html.ActionLink("Open", "Edit", new { id = item.SubTaskId });
+                }
+            }
+            | @Html.ActionLink("Edit", "Edit", new { id=item.SubTaskId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SubTaskId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SubTaskId })
+        </td>
+    </tr>
+}
+
+</table>

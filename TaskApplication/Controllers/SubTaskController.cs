@@ -16,10 +16,17 @@ namespace TaskApplication.Controllers
         //
         // GET: /SubTask/
 
+        public ActionResult _Index(int subTaskId)
+        {
+            ViewBag.IssueId = subTaskId;
+            var subTasks = db.SubTasks.Where(s => s.IssueId == subTaskId).ToList();
+            return PartialView("_Index", subTasks);
+        }
+
         public PartialViewResult _GetSubTasks(int issueId)
         {
             ViewBag.IssueId = issueId;
-            var subTasks = db.SubTasks.Where(s=>s.IssueId == issueId).ToList();
+            var subTasks = db.SubTasks.Where(s => s.IssueId == issueId).ToList();
             return PartialView("_GetSubTasks", subTasks);
         }
 

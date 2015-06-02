@@ -295,6 +295,11 @@
     <Content Include="Views\SubTask\Delete.cshtml" />
     <Content Include="Views\SubTask\_GetSubTasks.cshtml" />
     <Content Include="Views\SubTask\_SubTaskForm.cshtml" />
+    <Content Include="Views\SubTask\_Index.cshtml" />
+    <Content Include="Views\SubTask\_Create.cshtml" />
+    <Content Include="Views\SubTask\_Delete.cshtml" />
+    <Content Include="Views\SubTask\_Details.cshtml" />
+    <Content Include="Views\SubTask\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
