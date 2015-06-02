@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "How to use";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<article>
+    <ol>
+        <strong>Доробити</strong>
+        <li>Видалення категорій. перехвачувати помилку. писати, що категорія використовується</li>
+        <li>Виведення/керування sub-task на сторнці Issue Edit/Details: виводити таблицею, як тут http://localhost:30255/SubTask + керування</li>
+        <li>http://localhost:30255/SubTask/Details/1 - тут виводити не ід Issue, а "Назва Issue (id)"</li>
+        <li>http://localhost:30255/SubTask -  тут виводити не ід Issue, а "Назва Issue (id)"</li>
+        <li>Реалізувати функціонал "Знищити всі зроблені (Resovle) задачі"</li>
+        <li>Реалізувати функціонал "Автоматичне переведення задачу у зроблені (Resovle), якщо всі підзадачі зроблені (Resovle)</li>
+    </ol>
+
+</article>
+
+<aside>
+    <h3>Aside Menu</h3>
+    <ul>
+        <li>@Html.ActionLink("Navigate page", "Index", "Home")</li>
+        <li>@Html.ActionLink("How to use", "About", "Home")</li>
+    </ul>
+</aside>

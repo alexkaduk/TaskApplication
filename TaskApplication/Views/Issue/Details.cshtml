@@ -1,0 +1,63 @@
+﻿@model TaskApplication.Models.Issue
+
+@{
+    ViewBag.Title = "Issue details";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Issue</legend>
+
+    <div class="display-label">
+         <span>@Html.DisplayNameFor(model => model.IssueName): </span>@Html.DisplayFor(model => model.IssueName)
+    </div>
+    @*<div class="display-field">
+        @Html.DisplayFor(model => model.IssueName)
+    </div>*@
+
+    <div class="display-label">
+         <span>@Html.DisplayNameFor(model => model.IssueDescription): </span>@Html.DisplayFor(model => model.IssueDescription)
+    </div>
+   @* <div class="display-field">
+        @Html.DisplayFor(model => model.IssueDescription)
+    </div>*@
+        <div class="display-label">
+         <span>@Html.DisplayNameFor(model => model.StatusId): </span>@Html.DisplayFor(model => model.Status.StatusName)
+    </div>
+    @*<div class="display-field">
+        @Html.DisplayFor(model => model.Status.StatusName)
+    </div>*@
+
+    <div class="display-label">
+         <span>@Html.DisplayNameFor(model => model.CategoryId): </span>@Html.DisplayFor(model => model.Category.CategoryName)
+    </div>
+    @*<div class="display-field">
+        @Html.DisplayFor(model => model.Category.CategoryName)
+    </div>*@
+    <div class="display-label">
+         <span>@Html.DisplayNameFor(model => model.IssueCreateDate): </span>@Html.DisplayFor(model => model.IssueCreateDate)
+    </div>
+    @*<div class="display-field">
+        @Html.DisplayFor(model => model.IssueCreateDate)
+    </div>*@
+
+    <div class="display-label">
+         <span>@Html.DisplayNameFor(model => model.IssueUpdateDate): </span>@Html.DisplayFor(model => model.IssueUpdateDate)
+    </div>
+    @*<div class="display-field">
+        @Html.DisplayFor(model => model.IssueUpdateDate)
+    </div>*@
+
+
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.IssueId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<hr>
+@Html.Action("_GetSubTasks", "SubTask", new { issueId = Model.IssueId})
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

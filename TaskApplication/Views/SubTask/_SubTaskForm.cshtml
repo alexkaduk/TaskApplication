@@ -1,0 +1,37 @@
+﻿@model TaskApplication.Models.SubTask
+@using TaskApplication.Models
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SubTaskName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SubTaskName)
+            @Html.ValidationMessageFor(model => model.SubTaskName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SubTaskDescrioption)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SubTaskDescrioption)
+            @Html.ValidationMessageFor(model => model.SubTaskDescrioption)
+        </div>
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.IssueId)
+        </div>*@
+        <div class="editor-field" style="display: none">
+            @Html.EditorFor(model => model.IssueId)
+            @*@Html.ValidationMessageFor(model => model.IssueId)*@
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StatusId)
+        </div>
+        <div class="editor-field">
+            @*@Html.EditorFor(model => model.StatusId)*@
+            @Html.DropDownListFor(model => model.StatusId, new SelectList((IEnumerable<Status>)ViewBag.Statuses, "StatusId", "StatusName"))
+            @Html.ValidationMessageFor(model => model.StatusId)
+        </div>
+
+        <input type="submit" value="Add Sub-task">        

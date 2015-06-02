@@ -1,0 +1,64 @@
+﻿@model IEnumerable<TaskApplication.Models.Issue>
+@using TaskApplication.Models
+
+@{
+    ViewBag.Title = "Issues to do";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueCreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueUpdateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IssueName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IssueDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IssueCreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IssueUpdateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status.StatusName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IssueId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IssueId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IssueId })
+        </td>
+    </tr>
+}
+
+</table>

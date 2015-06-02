@@ -1,0 +1,23 @@
+﻿@model System.Collections.Generic.List<TaskApplication.Models.SubTask>
+
+<div id="subtasks">
+    <h3>Issue sub-task</h3>
+    <ul>
+        @foreach (var subtask in Model)
+        { 
+            <li>@subtask.SubTaskName (@subtask.SubTaskDescrioption)</li>
+        }
+    </ul>
+    <h3>Create new sub-task</h3>
+    @using (Ajax.BeginForm("_SubmitSubTask", "SubTask", new AjaxOptions { UpdateTargetId = "subtasks" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Action("_SubTaskForm", "SubTask", new { id = ViewBag.IssueId })
+    }
+    
+    @*@using (Ajax.BeginForm("_SubmitComment", "Comments", new AjaxOptions {UpdateTargetId = "comments" }))
+    { 
+        @Html.AntiForgeryToken()
+        @Html.Action("_CommentForm", "Comments", new { id = ViewBag.PostId })
+    }*@
+</div>
