@@ -14,13 +14,27 @@ namespace TaskApplication.Controllers
         private TaskContex db = new TaskContex();
 
         //
-        // GET: /SubTask/
+        // GET: /SubTask
 
-        public ActionResult _Index(int subTaskId)
+        public ActionResult _Index(int issueId)
         {
-            ViewBag.IssueId = subTaskId;
-            var subTasks = db.SubTasks.Where(s => s.IssueId == subTaskId).ToList();
+            ViewBag.IssueId = issueId;
+            var subTasks = db.SubTasks.Where(s => s.IssueId == issueId).ToList();
             return PartialView("_Index", subTasks);
+        }
+        int counter = 1;
+        public void _ChangeSubTaskStatus(int subTaskId)
+        {   
+            counter++;
+            ViewBag.counteer = "2+ counter"; // чому сцуко не передається на вью ???????????
+
+            if (db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId.ToString() == "1")
+                db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId = 2;
+            if (db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId.ToString() == "2")
+                db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId = 1;
+            db.SaveChanges();
+            _Index(db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().IssueId);
+            
         }
 
         public PartialViewResult _GetSubTasks(int issueId)
@@ -103,6 +117,7 @@ namespace TaskApplication.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(subtask);
         }
 

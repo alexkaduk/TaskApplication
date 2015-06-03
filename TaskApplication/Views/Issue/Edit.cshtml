@@ -56,8 +56,12 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 <hr>
+@Html.Action("_GetSubTasks", "SubTask", new { issueId = Model.IssueId })
 
-@Html.Action("_GetSubTasks", "SubTask", new { issueId = Model.IssueId})
+<hr>
+
+    @Html.Action("_Index", "SubTask", new { issueId = Model.IssueId })
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

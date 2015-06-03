@@ -14,10 +14,11 @@
         @Html.AntiForgeryToken()
         @Html.Action("_SubTaskForm", "SubTask", new { id = ViewBag.IssueId })
     }
+</div>
+
     
     @*@using (Ajax.BeginForm("_SubmitComment", "Comments", new AjaxOptions {UpdateTargetId = "comments" }))
     { 
         @Html.AntiForgeryToken()
         @Html.Action("_CommentForm", "Comments", new { id = ViewBag.PostId })
     }*@
-</div>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TaskApplication.Models.SubTask>
 
 @{
-    ViewBag.Title = "Issue sub-task";
+    ViewBag.Title = "Issue sub-tasks";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table>
+<table id="subtaskcontainer">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.SubTaskName)
@@ -23,7 +23,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.SubTaskName)
@@ -37,18 +38,38 @@
         <td>
             @{  if (item.Status.StatusName == "Open")
                 {
-                    @Html.ActionLink("Resolve", "Edit", new { id=item.SubTaskId });
+                    @Ajax.ActionLink("Поменять данные", "_ChangeSubTaskStatus", "SubTask", new { id = item.SubTaskId }, new AjaxOptions{UpdateTargetId = "subtaskcontainer"})
+                    @Html.ActionLink("Resolve", "Edit", new { id = item.SubTaskId });
+                    @ViewBag.counteer
                 }
                 else
                 {
                     @Html.ActionLink("Open", "Edit", new { id = item.SubTaskId });
                 }
             }
-            | @Html.ActionLink("Edit", "Edit", new { id=item.SubTaskId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SubTaskId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SubTaskId })
+            | @Html.ActionLink("Edit", "Edit", new { id = item.SubTaskId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.SubTaskId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.SubTaskId })
         </td>
     </tr>
 }
-
 </table>
+
+
+            @*
+        
+        $.ajax({
+            type: "GET",
+            url: "/ajaxUrl",
+            data: { id: id },
+            beforeSend: function () {
+                /* что-то сделать перед */
+            },
+            success: function (data) {
+                /* обработать результат */
+            },
+            error: function () {
+                /* обработать ошибку */
+            }
+        });
+        *@
