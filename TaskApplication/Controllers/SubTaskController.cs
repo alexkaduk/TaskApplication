@@ -23,18 +23,27 @@ namespace TaskApplication.Controllers
             return PartialView("_Index", subTasks);
         }
         int counter = 1;
-        public void _ChangeSubTaskStatus(int subTaskId)
-        {   
+        public PartialViewResult _ChangeSubTaskStatus(int issueId, int subTaskId)
+        {
+            // чому сцуко не передається на вью ???????????
             counter++;
-            ViewBag.counteer = "2+ counter"; // чому сцуко не передається на вью ???????????
+            ViewBag.SubTasksId = db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId; 
 
-            if (db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId.ToString() == "1")
+            // це не працює!
+            if (db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().Status.StatusName.ToString() == "Open")
                 db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId = 2;
-            if (db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId.ToString() == "2")
+            // не працює if (db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId == 2)
+            if (db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().Status.StatusName.ToString() == "Resolve")
                 db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId = 1;
+
             db.SaveChanges();
-            _Index(db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().IssueId);
-            
+
+            // перегружає сторінку. але статус не міняє
+            //ViewBag.IssueId = subTask.IssueId;
+            var subTasks = db.SubTasks.Where(s => s.IssueId == issueId).ToList();
+            return PartialView("_Index", subTasks);
+
+
         }
 
         public PartialViewResult _GetSubTasks(int issueId)

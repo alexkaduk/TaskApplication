@@ -23,40 +23,40 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubTaskName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubTaskDescrioption)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status.StatusName)
-        </td>
-        <td>
-            @{  if (item.Status.StatusName == "Open")
-                {
-                    @Ajax.ActionLink("Поменять данные", "_ChangeSubTaskStatus", "SubTask", new { id = item.SubTaskId }, new AjaxOptions{UpdateTargetId = "subtaskcontainer"})
-                    @Html.ActionLink("Resolve", "Edit", new { id = item.SubTaskId });
-                    @ViewBag.counteer
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubTaskName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubTaskDescrioption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.StatusName)
+            </td>
+            <td>
+                @{  if (item.Status.StatusName.ToString() == "Open")
+                    {
+                        @Ajax.ActionLink("Resolve issue", "_ChangeSubTaskStatus", "SubTask", new { issueId = item.IssueId, subTaskId = item.SubTaskId }, new AjaxOptions { UpdateTargetId = "subtaskcontainer" })
+                        @*@Html.ActionLink("Resolve", "Edit", new { id = item.SubTaskId });*@
+                    }
+                    if (item.Status.StatusName.ToString() == "Resolve")
+                    {
+                        @Ajax.ActionLink("Open issue", "_ChangeSubTaskStatus", "SubTask", new { issueId = item.IssueId, subTaskId = item.SubTaskId }, new AjaxOptions { UpdateTargetId = "subtaskcontainer" })
+                        @*@Html.ActionLink("Open", "Edit", new { id = item.SubTaskId });*@
+                    }
                 }
-                else
-                {
-                    @Html.ActionLink("Open", "Edit", new { id = item.SubTaskId });
-                }
-            }
-            | @Html.ActionLink("Edit", "Edit", new { id = item.SubTaskId }) |
+                | @Html.ActionLink("Edit", "Edit", new { id = item.SubTaskId }) |
             @Html.ActionLink("Details", "Details", new { id = item.SubTaskId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.SubTaskId })
-        </td>
-    </tr>
-}
+            </td>
+        </tr>
+    }
 </table>
 
 
-            @*
+@*
         
         $.ajax({
             type: "GET",
