@@ -11,36 +11,21 @@
     <legend>SubTask</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.SubTaskName)
+        <span>@Html.DisplayNameFor(model => model.SubTaskName): </span>@Html.DisplayFor(model => model.SubTaskName)
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.SubTaskName)
-    </div>
-
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.SubTaskDescrioption)
+        <span>@Html.DisplayNameFor(model => model.SubTaskDescrioption): </span>@Html.DisplayFor(model => model.SubTaskDescrioption)
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.SubTaskDescrioption)
-    </div>
-
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.IssueId)
+        <span>@Html.DisplayNameFor(model => model.IssueId): </span>@Html.DisplayFor(model => model.Issue.IssueName)
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.IssueId)
-    </div>
-
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.StatusId)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.StatusId)
+        <span>@Html.DisplayNameFor(model => model.StatusId): </span>@Html.DisplayFor(model => model.Status.StatusName)
     </div>
 </fieldset>
 @using (Html.BeginForm()) {
     <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+        <input type="submit" value="Delete" />
+        @Html.ActionLink("Back to Issue", "Edit", "Issue", new { id = Model.IssueId }, null)
     </p>
 }

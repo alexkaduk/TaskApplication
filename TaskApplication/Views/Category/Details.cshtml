@@ -1,30 +1,24 @@
 ﻿@model TaskApplication.Models.Category
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Category details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title </h2>
 
 <fieldset>
     <legend>Category</legend>
 
     <div class="display-label">
-         <span>@Html.DisplayNameFor(model => model.CategoryName): </span>@Html.DisplayFor(model => model.CategoryName)
+        <span>@Html.DisplayNameFor(model => model.CategoryName): </span>@Html.DisplayFor(model => model.CategoryName)
     </div>
-    @*<div class="display-field">
-        @Html.DisplayFor(model => model.CategoryName)
-    </div>*@
 
     <div class="display-label">
-         <span>@Html.DisplayNameFor(model => model.CategoryDescription): </span>@Html.DisplayFor(model => model.CategoryDescription)
+        <span>@Html.DisplayNameFor(model => model.CategoryDescription): </span>@Html.DisplayFor(model => model.CategoryDescription)
     </div>
-    @*<div class="display-field">
-        @Html.DisplayFor(model => model.CategoryDescription)
-    </div>*@
 
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.CategoryId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CategoryId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

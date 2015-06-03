@@ -16,34 +16,39 @@ namespace TaskApplication.Controllers
         //
         // GET: /SubTask
 
-        public ActionResult _Index(int issueId)
+        public ActionResult _Index(int issueId, bool isEdit = true)
         {
             ViewBag.IssueId = issueId;
+            ViewBag.IsEdit = isEdit;
             var subTasks = db.SubTasks.Where(s => s.IssueId == issueId).ToList();
             return PartialView("_Index", subTasks);
         }
-        int counter = 1;
+
         public PartialViewResult _ChangeSubTaskStatus(int issueId, int subTaskId)
         {
-            // чому сцуко не передається на вью ???????????
-            counter++;
-            ViewBag.SubTasksId = db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId; 
+            var subTask = db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault();
 
-            // це не працює!
-            if (db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().Status.StatusName.ToString() == "Open")
-                db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId = 2;
-            // не працює if (db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId == 2)
-            if (db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().Status.StatusName.ToString() == "Resolve")
-                db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault().StatusId = 1;
+            if (subTask.StatusId == (int)Statuses.Open)
+            {
+                subTask.StatusId = (int)Statuses.Resolved;
+            }
+            else if (subTask.StatusId == (int)Statuses.Resolved)
+            {
+                subTask.StatusId = (int)Statuses.Open;
+            }
 
             db.SaveChanges();
 
-            // перегружає сторінку. але статус не міняє
-            //ViewBag.IssueId = subTask.IssueId;
+            var issue = db.Issues.Find(issueId);
+            if (issue.SubTasks.All(s => s.StatusId == (int)Statuses.Resolved))
+            {
+                issue.StatusId = (int)Statuses.Resolved;
+                db.SaveChanges();
+                ViewBag.IsIssueShouldBeUpdated = true;
+            }
+
             var subTasks = db.SubTasks.Where(s => s.IssueId == issueId).ToList();
             return PartialView("_Index", subTasks);
-
-
         }
 
         public PartialViewResult _GetSubTasks(int issueId)
@@ -121,6 +126,8 @@ namespace TaskApplication.Controllers
 
         public ActionResult Edit(int id = 0)
         {
+            ViewBag.Statuses = db.Statuses;
+
             SubTask subtask = db.SubTasks.Find(id);
             if (subtask == null)
             {
@@ -136,11 +143,15 @@ namespace TaskApplication.Controllers
         [HttpPost]
         public ActionResult Edit(SubTask subtask)
         {
+            var oldSubtask = db.SubTasks.Find(subtask.SubTaskId);
+            subtask.IssueId = oldSubtask.IssueId;
+            db.Entry(oldSubtask).State = EntityState.Detached;
+
             if (ModelState.IsValid)
             {
                 db.Entry(subtask).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "Issue", new { id = subtask.IssueId });
             }
             return View(subtask);
         }
@@ -165,9 +176,10 @@ namespace TaskApplication.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             SubTask subtask = db.SubTasks.Find(id);
+            var issueId = subtask.IssueId;
             db.SubTasks.Remove(subtask);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", "Issue", new { id = issueId });
         }
 
         protected override void Dispose(bool disposing)

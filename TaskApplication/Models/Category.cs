@@ -15,8 +15,5 @@ namespace TaskApplication.Models
 
         [Display(Name = "Description")]
         public string CategoryDescription { get; set; }
-
-        // public virtual int IssueId { get; set; }
-        // public virtual int SubTaskId { get; set; }
     }
 }

@@ -9,36 +9,21 @@
 
 <fieldset>
     <legend>SubTask</legend>
-
     <div class="display-label">
         <span>@Html.DisplayNameFor(model => model.SubTaskName): </span>@Html.DisplayFor(model => model.SubTaskName)
     </div>
-@*    <div class="display-field">
-        @Html.DisplayFor(model => model.SubTaskName)
-    </div>*@
-
     <div class="display-label">
         <span>@Html.DisplayNameFor(model => model.SubTaskDescrioption): </span>@Html.DisplayFor(model => model.SubTaskDescrioption)
     </div>
-   @* <div class="display-field">
-        @Html.DisplayFor(model => model.SubTaskDescrioption)
-    </div>*@
-
     <div class="display-label">
         <span>@Html.DisplayNameFor(model => model.StatusId): </span>@Html.DisplayFor(model => model.Status.StatusName)
     </div>
-    @*<div class="display-field">
-        @Html.DisplayFor(model => model.Status.StatusName)
-    </div>*@
-
     <div class="display-label">
         @Html.DisplayNameFor(model => model.IssueId)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.IssueId)
     </div>
-
-    
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.SubTaskId }) |

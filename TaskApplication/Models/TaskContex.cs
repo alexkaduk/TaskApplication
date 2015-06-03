@@ -8,9 +8,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 namespace TaskApplication.Models
 {
     public class TaskContex : DbContext
-    {
-        // http://habrahabr.ru/sandbox/23561/ опис моделі
-        
+    {       
         public DbSet<Issue> Issues { get; set; }
 
         public DbSet<SubTask> SubTasks { get; set; }

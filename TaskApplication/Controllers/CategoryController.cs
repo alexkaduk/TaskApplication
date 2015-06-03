@@ -106,9 +106,17 @@ namespace TaskApplication.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (db.Issues.Any(i => i.CategoryId == id))
+            {
+                ViewBag.ErrorMessage = "Cannot delete. Category is used.";
+                return View(category);
+            }
+            else
+            {
+                db.Categories.Remove(category);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

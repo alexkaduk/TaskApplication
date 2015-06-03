@@ -20,7 +20,7 @@ namespace TaskApplication.Controllers
         public ActionResult Index()
         {
             ViewBag.Statuses = db.Statuses;
-            return View(db.Issues.ToList());
+            return View(db.Issues.OrderBy(i => i.CategoryId).ToList());
         }
 
         //
@@ -93,7 +93,7 @@ namespace TaskApplication.Controllers
 
             issue.IssueCreateDate = oldIssue.IssueCreateDate;
             issue.IssueUpdateDate = DateTime.Now;
-            
+
             if (ModelState.IsValid)
             {
                 db.Entry(issue).State = EntityState.Modified;

@@ -1,4 +1,5 @@
 ﻿@model TaskApplication.Models.SubTask
+@using TaskApplication.Models
 
 @{
     ViewBag.Title = "Sub-task edit";
@@ -6,7 +7,8 @@
 @ViewBag.SubTaskId
 <h2>Sub-task edit</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -31,18 +33,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.IssueId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IssueId)
-            @Html.ValidationMessageFor(model => model.IssueId)
-        </div>
-
-        <div class="editor-label">
             @Html.LabelFor(model => model.StatusId)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.StatusId)
+            @Html.DropDownListFor(model => model.StatusId, new SelectList((IEnumerable<Status>)ViewBag.Statuses, "StatusId", "StatusName"))
+            @*@Html.EditorFor(model => model.StatusId)*@
             @Html.ValidationMessageFor(model => model.StatusId)
         </div>
 
@@ -53,7 +48,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Issue", "Edit", "Issue", new { id = Model.IssueId }, null)
 </div>
 
 @section Scripts {

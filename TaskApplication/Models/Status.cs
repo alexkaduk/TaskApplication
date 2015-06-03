@@ -6,14 +6,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TaskApplication.Models
 {
+    public enum Statuses : int
+    {
+        Open = 1,
+        Resolved = 2
+    }
+
     public class Status
     {
         public int StatusId { get; set; }
 
         [Display(Name = "Status")]
         public string StatusName { get; set; }
-
-        // public virtual int IssueId { get; set; }
-        // public virtual int SubTaskId { get; set; }
     }
 }

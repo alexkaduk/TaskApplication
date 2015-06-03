@@ -1,75 +1,62 @@
 ﻿@model IEnumerable<TaskApplication.Models.SubTask>
+@using TaskApplication.Models
 
 @{
     ViewBag.Title = "Issue sub-tasks";
 }
-
-<h2>@ViewBag.Title</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table id="subtaskcontainer">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.SubTaskName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubTaskDescrioption)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StatusId)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div id="subtaskcontainer">
+    <h2>Issue sub-tasks</h2>
+    <table>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubTaskName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubTaskDescrioption)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status.StatusName)
-            </td>
-            <td>
-                @{  if (item.Status.StatusName.ToString() == "Open")
-                    {
-                        @Ajax.ActionLink("Resolve issue", "_ChangeSubTaskStatus", "SubTask", new { issueId = item.IssueId, subTaskId = item.SubTaskId }, new AjaxOptions { UpdateTargetId = "subtaskcontainer" })
-                        @*@Html.ActionLink("Resolve", "Edit", new { id = item.SubTaskId });*@
-                    }
-                    if (item.Status.StatusName.ToString() == "Resolve")
-                    {
-                        @Ajax.ActionLink("Open issue", "_ChangeSubTaskStatus", "SubTask", new { issueId = item.IssueId, subTaskId = item.SubTaskId }, new AjaxOptions { UpdateTargetId = "subtaskcontainer" })
-                        @*@Html.ActionLink("Open", "Edit", new { id = item.SubTaskId });*@
-                    }
-                }
-                | @Html.ActionLink("Edit", "Edit", new { id = item.SubTaskId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.SubTaskId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.SubTaskId })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.SubTaskName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubTaskDescrioption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusId)
+            </th>
+            <th></th>
         </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubTaskName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubTaskDescrioption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status.StatusName)
+                </td>
+                @if (ViewBag.IsEdit == null || ViewBag.IsEdit)
+                {
+                    <td>
+                        <span  class="link-dotted">
+                        @{  if (item.Status.StatusId == (int)Statuses.Open)
+                            {
+                                @Ajax.ActionLink("Resolve", "_ChangeSubTaskStatus", "SubTask", new { issueId = item.IssueId, subTaskId = item.SubTaskId }, new AjaxOptions { UpdateTargetId = "subtaskcontainer" })
+                            }
+                            if (item.Status.StatusId == (int)Statuses.Resolved)
+                            {
+                                @Ajax.ActionLink("Open", "_ChangeSubTaskStatus", "SubTask", new { issueId = item.IssueId, subTaskId = item.SubTaskId }, new AjaxOptions { UpdateTargetId = "subtaskcontainer" })
+                            }
+                        } </span>
+                        | @Html.ActionLink("Edit", "Edit", new { id = item.SubTaskId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.SubTaskId })
+                   
+                            </td>
+                }
+            </tr>
+        }
+    </table>
+    @if (ViewBag.IsIssueShouldBeUpdated != null && ViewBag.IsIssueShouldBeUpdated)
+    {
+        <script>
+            location.reload();
+        </script>
     }
-</table>
-
-
-@*
-        
-        $.ajax({
-            type: "GET",
-            url: "/ajaxUrl",
-            data: { id: id },
-            beforeSend: function () {
-                /* что-то сделать перед */
-            },
-            success: function (data) {
-                /* обработать результат */
-            },
-            error: function () {
-                /* обработать ошибку */
-            }
-        });
-        *@
+</div>
