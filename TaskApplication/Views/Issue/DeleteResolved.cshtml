@@ -1,0 +1,64 @@
+﻿@model IEnumerable<TaskApplication.Models.Issue>
+@using TaskApplication.Models
+
+@{
+    ViewBag.Title = "Delete resolved issue(s)";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueCreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IssueUpdateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </th>
+        <th></th>
+    </tr>
+   
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueCreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueUpdateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.StatusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+        </tr>
+    }
+
+</table>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

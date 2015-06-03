@@ -287,15 +287,12 @@
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
-    <Content Include="Views\SubTask\Details.cshtml" />
-    <Content Include="Views\SubTask\Create.cshtml" />
     <Content Include="Views\SubTask\Edit.cshtml" />
     <Content Include="Views\SubTask\Delete.cshtml" />
     <Content Include="Views\SubTask\_GetSubTasks.cshtml" />
     <Content Include="Views\SubTask\_SubTaskForm.cshtml" />
     <Content Include="Views\SubTask\_Index.cshtml" />
-    <Content Include="Views\SubTask\_Create.cshtml" />
-    <Content Include="Views\SubTask\_Details.cshtml" />
+    <Content Include="Views\Issue\DeleteResolved.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -128,6 +128,32 @@ namespace TaskApplication.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult DeleteResolved()
+        {
+            var resovledIssue = db.Issues.Where(i => i.StatusId == (int)Statuses.Resolved).ToList(); 
+            if (resovledIssue == null)
+            {
+                return HttpNotFound();
+            }
+            return View(resovledIssue);
+        }
+
+        //
+        // POST: /Issue/Delete/5
+
+        [HttpPost, ActionName("DeleteResolved")]
+        public ActionResult DeleteResolvedConfirmed()
+        {
+            var resovledIssue = db.Issues.Where(i => i.StatusId == (int)Statuses.Resolved).ToList();
+            foreach (Issue issue in resovledIssue)
+            {
+                // якщо є підзадачі, то не можна видаляти - зробити аналогічно категоріям!!!
+                db.Issues.Remove(issue);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
