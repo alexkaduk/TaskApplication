@@ -57,7 +57,8 @@
 </div>
 
 <hr>
-@Html.Action("_GetSubTasks", "SubTask", new { issueId = Model.IssueId })
+
+    @Html.Action("_GetSubTasks", "SubTask", new { issueId = Model.IssueId })
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

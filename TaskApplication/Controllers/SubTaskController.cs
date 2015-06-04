@@ -55,6 +55,7 @@ namespace TaskApplication.Controllers
         {
             ViewBag.IssueId = issueId;
             var subTasks = db.SubTasks.Where(s => s.IssueId == issueId).ToList();
+
             return PartialView("_GetSubTasks", subTasks);
         }
 
@@ -151,6 +152,14 @@ namespace TaskApplication.Controllers
             {
                 db.Entry(subtask).State = EntityState.Modified;
                 db.SaveChanges();
+
+                var issue = db.Issues.Find(subtask.IssueId);
+                if (issue.SubTasks.All(s => s.StatusId == (int)Statuses.Resolved))
+                {
+                    issue.StatusId = (int)Statuses.Resolved;
+                    db.SaveChanges();
+                }
+                
                 return RedirectToAction("Edit", "Issue", new { id = subtask.IssueId });
             }
             return View(subtask);

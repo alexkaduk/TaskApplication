@@ -33,6 +33,8 @@
     <div class="display-label">
          <span>@Html.DisplayNameFor(model => model.IssueUpdateDate): </span>@Html.DisplayFor(model => model.IssueUpdateDate)
     </div>
+
+    <div class="red_color">@ViewBag.ErrorMessage</div>
     
 </fieldset>
 @using (Html.BeginForm()) {

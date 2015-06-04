@@ -595,16 +595,6 @@ tr.pager td {
     font-weight: bold;
 }
 
-/*.link-dotted {
-    border-bottom-color: rgb(33, 65, 110);
-    border-bottom-style: dotted;
-    border-bottom-width: 1px;
-}*/
-
-/*.link-dotted:hover {
-        border-bottom-style: none;
-    }*/
-
 .link-dotted > a {
     text-decoration: none;
     border-bottom-color: rgb(33, 65, 110);
@@ -616,6 +606,10 @@ tr.pager td {
         border-bottom-style: none;
         background-color: transparent;
     }
+
+.red_color {
+    color: red;
+}
 
 /********************
 *   Mobile Styles   *

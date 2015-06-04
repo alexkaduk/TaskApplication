@@ -8,7 +8,15 @@
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("Delete all resolved issues", "DeleteResolved")
+    @Html.ActionLink("Create New", "Create") | 
+    @if (@ViewBag.isAnyResolvedIssue == null)
+    {
+        @Html.ActionLink("Delete all resolved issues", "DeleteResolved")
+    }
+    else
+    {
+        @ViewBag.isAnyResolvedIssue
+    }
 </p>
 <table>
     <tr>

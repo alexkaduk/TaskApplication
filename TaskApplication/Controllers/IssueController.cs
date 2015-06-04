@@ -20,6 +20,12 @@ namespace TaskApplication.Controllers
         public ActionResult Index()
         {
             ViewBag.Statuses = db.Statuses;
+
+            if (!db.Issues.Any(i => i.StatusId == (int)Statuses.Resolved))
+            {
+                ViewBag.isAnyResolvedIssue = "Delete all resolved issues (nothing to do)";
+            }
+
             return View(db.Issues.OrderBy(i => i.CategoryId).ToList());
         }
 
@@ -123,19 +129,27 @@ namespace TaskApplication.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Issue issue = db.Issues.Find(id);
-            db.Issues.Remove(issue);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (db.SubTasks.Any(s => s.IssueId == id))
+            {
+                ViewBag.ErrorMessage = "Cannot delete. Issue is used.";
+                return View(issue);
+            }
+            else
+            {
+                db.Issues.Remove(issue);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult DeleteResolved()
         {
-            var resovledIssue = db.Issues.Where(i => i.StatusId == (int)Statuses.Resolved).ToList(); 
-            if (resovledIssue == null)
+            var resovledIssues = db.Issues.Where(i => i.StatusId == (int)Statuses.Resolved).ToList();
+            if (resovledIssues == null)
             {
                 return HttpNotFound();
             }
-            return View(resovledIssue);
+            return View(resovledIssues);
         }
 
         //
@@ -144,10 +158,13 @@ namespace TaskApplication.Controllers
         [HttpPost, ActionName("DeleteResolved")]
         public ActionResult DeleteResolvedConfirmed()
         {
-            var resovledIssue = db.Issues.Where(i => i.StatusId == (int)Statuses.Resolved).ToList();
-            foreach (Issue issue in resovledIssue)
+            var resovledIssues = db.Issues.Where(i => i.StatusId == (int)Statuses.Resolved).ToList();
+            foreach (Issue issue in resovledIssues)
             {
-                // якщо є підзадачі, то не можна видаляти - зробити аналогічно категоріям!!!
+                foreach (var subtask in issue.SubTasks.ToArray())
+                {
+                    db.SubTasks.Remove(subtask);
+                }
                 db.Issues.Remove(issue);
             }
             db.SaveChanges();
