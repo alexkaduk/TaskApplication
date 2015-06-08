@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace TaskApplication.Models
+namespace TaskApplication.DataAccess.Entities
 {
     public class Category
     {

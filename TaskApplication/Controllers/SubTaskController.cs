@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,7 +10,7 @@ namespace TaskApplication.Controllers
 {
     public class SubTaskController : Controller
     {
-        private TaskContex db = new TaskContex();
+       /* private TaskContex db = new TaskContex();
 
         //
         // GET: /SubTask
@@ -189,12 +188,6 @@ namespace TaskApplication.Controllers
             db.SubTasks.Remove(subtask);
             db.SaveChanges();
             return RedirectToAction("Edit", "Issue", new { id = issueId });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
-        }
+        }*/
     }
 }

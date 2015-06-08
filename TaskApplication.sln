@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskApplication", "TaskApplication\TaskApplication.csproj", "{33A7FE3C-1AB4-4AFF-8581-038290CA36D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskApplication.DataAccess", "TaskApplication.DataAccess\TaskApplication.DataAccess.csproj", "{8FD11394-491D-439E-BC4D-C0016974A678}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskApplication.Services", "TaskApplication.Services\TaskApplication.Services.csproj", "{0D8D037A-E33A-4376-BEB8-681286F2F14B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{33A7FE3C-1AB4-4AFF-8581-038290CA36D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33A7FE3C-1AB4-4AFF-8581-038290CA36D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33A7FE3C-1AB4-4AFF-8581-038290CA36D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FD11394-491D-439E-BC4D-C0016974A678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FD11394-491D-439E-BC4D-C0016974A678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FD11394-491D-439E-BC4D-C0016974A678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FD11394-491D-439E-BC4D-C0016974A678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D8D037A-E33A-4376-BEB8-681286F2F14B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D8D037A-E33A-4376-BEB8-681286F2F14B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D8D037A-E33A-4376-BEB8-681286F2F14B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D8D037A-E33A-4376-BEB8-681286F2F14B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

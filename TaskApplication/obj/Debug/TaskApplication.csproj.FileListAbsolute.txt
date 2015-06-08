@@ -202,3 +202,7 @@ D:\Projects\TaskApplication.git\trunk\TaskApplication\bin\DotNetOpenAuth.OpenId.
 D:\Projects\TaskApplication.git\trunk\TaskApplication\obj\Debug\TaskApplication.csprojResolveAssemblyReference.cache
 D:\Projects\TaskApplication.git\trunk\TaskApplication\obj\Debug\TaskApplication.dll
 D:\Projects\TaskApplication.git\trunk\TaskApplication\obj\Debug\TaskApplication.pdb
+D:\Projects\TaskApplication.git\trunk\TaskApplication\bin\TaskApplication.DataAccess.dll
+D:\Projects\TaskApplication.git\trunk\TaskApplication\bin\TaskApplication.DataAccess.pdb
+D:\Projects\TaskApplication.git\trunk\TaskApplication\bin\TaskApplication.Services.dll
+D:\Projects\TaskApplication.git\trunk\TaskApplication\bin\TaskApplication.Services.pdb

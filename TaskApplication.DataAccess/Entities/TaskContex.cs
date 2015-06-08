@@ -4,11 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using TaskApplication.DataAccess.Entities;
 
 namespace TaskApplication.Models
 {
     public class TaskContex : DbContext
-    {       
+    {
         public DbSet<Issue> Issues { get; set; }
 
         public DbSet<SubTask> SubTasks { get; set; }

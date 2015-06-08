@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TaskApplication.DataAccess.Entities;
+using TaskApplication.DataAccess.Repositories;
 using TaskApplication.Models;
+using TaskApplication.Services.Concrete;
 
 namespace TaskApplication.Controllers
 {
     public class CategoryController : Controller
     {
-        private TaskContex db = new TaskContex();
-
+        private CategoryService categoryService = new CategoryService();
+        //private CategoryReposiltory categoryReposiltory = new CategoryReposiltory();
         //
         // GET: /Category/
 
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            return View(categoryService.GetAll());
         }
 
         //
@@ -26,7 +28,7 @@ namespace TaskApplication.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Category category = db.Categories.Find(id);
+            Category category = categoryService.FindSingleBy(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -50,8 +52,8 @@ namespace TaskApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
-                db.SaveChanges();
+                categoryService.Add(category);
+
                 return RedirectToAction("Index");
             }
 
@@ -63,7 +65,7 @@ namespace TaskApplication.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Category category = db.Categories.Find(id);
+            Category category = categoryService.FindSingleBy(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -79,8 +81,8 @@ namespace TaskApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(category).State = EntityState.Modified;
+                categoryService.Edit(category);
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -91,7 +93,7 @@ namespace TaskApplication.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Category category = db.Categories.Find(id);
+            Category category = categoryService.FindSingleBy(id); // .Categories.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -105,24 +107,17 @@ namespace TaskApplication.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            if (db.Issues.Any(i => i.CategoryId == id))
+            // Category category = categoryReposiltory.FindSingleBy(c => c.CategoryId == id);
+            if (categoryService.IsUsed(id))
             {
                 ViewBag.ErrorMessage = "Cannot delete. Category is used.";
-                return View(category);
+                return View(categoryService.FindSingleBy(id));
             }
             else
             {
-                db.Categories.Remove(category);
-                db.SaveChanges();
+                categoryService.Delete(id);
                 return RedirectToAction("Index");
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }
