@@ -92,5 +92,16 @@ namespace TaskApplication.Services.Concrete
             //!db.Issues.Any(i => i.StatusId == (int)Statuses.Resolved)
             return issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).Any();
         }
+
+        public bool ChangeStatusIfAllSubTasksResolved(Issue issue)
+        {
+            if (issue.SubTasks.All(s => s.StatusId == (int)Statuses.Resolved))
+            {
+                issue.StatusId = (int)Statuses.Resolved;
+                issueReposiltory.Save();
+                return true;
+            }
+            return false;
+        }
     }
 }

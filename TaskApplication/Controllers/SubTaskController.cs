@@ -15,7 +15,11 @@ namespace TaskApplication.Controllers
     {
 
         private SubTaskService subTaskService = new SubTaskService();
+        private IssueService issueService = new IssueService();
+        private StatusService statusService = new StatusService();
 
+        //
+        // GET: /SubTask
         public ActionResult _Index(int issueId, bool isEdit = true)
         {
             ViewBag.IssueId = issueId;
@@ -23,6 +27,149 @@ namespace TaskApplication.Controllers
             var subTasks = subTaskService.GetAllByIssueId(issueId);
             return PartialView("_Index", subTasks);
         }
+
+        public PartialViewResult _ChangeSubTaskStatus(int issueId, int subTaskId)
+        {
+            var subTask = subTaskService.FindSingleBy(subTaskId);
+
+            subTaskService.ChangeStatusOpenResolve(subTask);
+
+            var issue = issueService.FindSingleBy(issueId);
+
+            ViewBag.IsIssueShouldBeUpdated = issueService.ChangeStatusIfAllSubTasksResolved(issue);
+
+            var subTasks = subTaskService.GetAllByIssueId(issueId); 
+            
+            return PartialView("_Index", subTasks);
+        }
+
+        public PartialViewResult _GetSubTasks(int issueId)
+        {
+            ViewBag.IssueId = issueId;
+
+            var subTasks = subTaskService.GetAllByIssueId(issueId);
+
+            return PartialView("_GetSubTasks", subTasks);
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult _SubTaskForm(int id)
+        {
+            ViewBag.Statuses = statusService.GetAll();
+
+            var model = new SubTask { IssueId = id };
+            return PartialView("_SubTaskForm", model);
+        }
+
+        [ValidateAntiForgeryToken]
+        public PartialViewResult _SubmitSubTask(SubTask subTask)
+        {
+            subTaskService.Add(subTask);
+
+            ViewBag.IssueId = subTask.IssueId;
+
+            var subTasks = subTaskService.GetAllByIssueId(subTask.IssueId);
+            
+            return PartialView("_GetSubTasks", subTasks);
+        }
+
+
+        public ActionResult Index()
+        {
+            return View(subTaskService.GetAll());
+        }
+
+        //
+        // GET: /SubTask/Details/5
+
+        public ActionResult Details(int id = 0)
+        {
+            SubTask subtask = subTaskService.FindSingleBy(id);
+            if (subtask == null)
+            {
+                return HttpNotFound();
+            }
+            return View(subtask);
+        }
+
+        //
+        // GET: /SubTask/Create
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        //
+        // POST: /SubTask/Create
+
+        [HttpPost]
+        public ActionResult Create(SubTask subtask)
+        {
+            if (ModelState.IsValid)
+            {
+                subTaskService.Add(subtask);
+                return RedirectToAction("Index");
+            }
+
+            return View(subtask);
+        }
+
+        //
+        // GET: /SubTask/Edit/5
+
+        public ActionResult Edit(int id = 0)
+        {
+            ViewBag.Statuses = statusService.GetAll();
+
+            SubTask subtask = subTaskService.FindSingleBy(id);
+            if (subtask == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(subtask);
+        }
+
+        //
+        // POST: /SubTask/Edit/5
+
+        [HttpPost]
+        public ActionResult Edit(SubTask subtask)
+        {
+            if (ModelState.IsValid)
+            {
+                subTaskService.Edit(subtask);
+                return RedirectToAction("Index");
+            }
+            return View(subtask);
+        }
+
+        //
+        // GET: /SubTask/Delete/5
+
+        public ActionResult Delete(int id = 0)
+        {
+            SubTask subtask = subTaskService.FindSingleBy(id);;
+            if (subtask == null)
+            {
+                return HttpNotFound();
+            }
+            return View(subtask);
+        }
+
+        //
+        // POST: /SubTask/Delete/5
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var issueId = subTaskService.FindSingleBy(id).IssueId;
+
+            subTaskService.Delete(id);
+            return RedirectToAction("Edit", "Issue", new { id = issueId });
+        }
+
         //
         // GET: /SubTask
 
@@ -31,7 +178,7 @@ namespace TaskApplication.Controllers
         //
         // GET: /SubTask
 
-        public ActionResult _Index(int issueId, bool isEdit = true)
+        //public ActionResult _Index(int issueId, bool isEdit = true)
         {
             ViewBag.IssueId = issueId;
             ViewBag.IsEdit = isEdit;
@@ -39,7 +186,7 @@ namespace TaskApplication.Controllers
             return PartialView("_Index", subTasks);
         }
 
-        public PartialViewResult _ChangeSubTaskStatus(int issueId, int subTaskId)
+        //public PartialViewResult _ChangeSubTaskStatus(int issueId, int subTaskId)
         {
             var subTask = db.SubTasks.Where(s => s.SubTaskId == subTaskId).FirstOrDefault();
 
@@ -66,7 +213,7 @@ namespace TaskApplication.Controllers
             return PartialView("_Index", subTasks);
         }
 
-        public PartialViewResult _GetSubTasks(int issueId)
+        //public PartialViewResult _GetSubTasks(int issueId)
         {
             ViewBag.IssueId = issueId;
             var subTasks = db.SubTasks.Where(s => s.IssueId == issueId).ToList();

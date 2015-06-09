@@ -10,3 +10,15 @@ G:\projects\TaskApplication\TaskApplication.Services\bin\Debug\EntityFramework.S
 G:\projects\TaskApplication\TaskApplication.Services\obj\Debug\TaskApplication.Services.csprojResolveAssemblyReference.cache
 G:\projects\TaskApplication\TaskApplication.Services\obj\Debug\TaskApplication.Services.dll
 G:\projects\TaskApplication\TaskApplication.Services\obj\Debug\TaskApplication.Services.pdb
+H:\projects\TaskApplication\TaskApplication.Services\obj\Debug\TaskApplication.Services.csprojResolveAssemblyReference.cache
+H:\projects\TaskApplication\TaskApplication.Services\obj\Debug\TaskApplication.Services.dll
+H:\projects\TaskApplication\TaskApplication.Services\obj\Debug\TaskApplication.Services.pdb
+H:\projects\TaskApplication\TaskApplication.Services\bin\Debug\TaskApplication.Services.dll.config
+H:\projects\TaskApplication\TaskApplication.Services\bin\Debug\TaskApplication.Services.dll
+H:\projects\TaskApplication\TaskApplication.Services\bin\Debug\TaskApplication.Services.pdb
+H:\projects\TaskApplication\TaskApplication.Services\bin\Debug\EntityFramework.dll
+H:\projects\TaskApplication\TaskApplication.Services\bin\Debug\EntityFramework.SqlServer.dll
+H:\projects\TaskApplication\TaskApplication.Services\bin\Debug\TaskApplication.DataAccess.dll
+H:\projects\TaskApplication\TaskApplication.Services\bin\Debug\TaskApplication.DataAccess.pdb
+H:\projects\TaskApplication\TaskApplication.Services\bin\Debug\EntityFramework.xml
+H:\projects\TaskApplication\TaskApplication.Services\bin\Debug\EntityFramework.SqlServer.xml

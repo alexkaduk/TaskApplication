@@ -210,3 +210,7 @@ G:\projects\TaskApplication\TaskApplication\bin\TaskApplication.DataAccess.dll
 G:\projects\TaskApplication\TaskApplication\bin\TaskApplication.Services.dll
 G:\projects\TaskApplication\TaskApplication\bin\TaskApplication.DataAccess.pdb
 G:\projects\TaskApplication\TaskApplication\bin\TaskApplication.Services.pdb
+H:\projects\TaskApplication\TaskApplication\bin\TaskApplication.DataAccess.dll
+H:\projects\TaskApplication\TaskApplication\bin\TaskApplication.Services.dll
+H:\projects\TaskApplication\TaskApplication\bin\TaskApplication.DataAccess.pdb
+H:\projects\TaskApplication\TaskApplication\bin\TaskApplication.Services.pdb

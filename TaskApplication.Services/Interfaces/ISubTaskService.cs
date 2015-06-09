@@ -12,6 +12,7 @@ namespace TaskApplication.Services.Interfaces
         IEnumerable<SubTask> GetAll();
         IEnumerable<SubTask> GetAllByIssueId(int id);
         SubTask FindSingleBy(int id);
+        void ChangeStatusOpenResolve(SubTask subTask);
         void Add(SubTask subTask);
         void Edit(SubTask subTask);
         void Delete(int id);
