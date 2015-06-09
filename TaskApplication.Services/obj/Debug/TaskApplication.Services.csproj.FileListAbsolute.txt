@@ -1,0 +1,12 @@
+G:\projects\TaskApplication\TaskApplication.Services\bin\Debug\TaskApplication.Services.dll.config
+G:\projects\TaskApplication\TaskApplication.Services\bin\Debug\TaskApplication.Services.dll
+G:\projects\TaskApplication\TaskApplication.Services\bin\Debug\TaskApplication.Services.pdb
+G:\projects\TaskApplication\TaskApplication.Services\bin\Debug\EntityFramework.dll
+G:\projects\TaskApplication\TaskApplication.Services\bin\Debug\EntityFramework.SqlServer.dll
+G:\projects\TaskApplication\TaskApplication.Services\bin\Debug\TaskApplication.DataAccess.dll
+G:\projects\TaskApplication\TaskApplication.Services\bin\Debug\TaskApplication.DataAccess.pdb
+G:\projects\TaskApplication\TaskApplication.Services\bin\Debug\EntityFramework.xml
+G:\projects\TaskApplication\TaskApplication.Services\bin\Debug\EntityFramework.SqlServer.xml
+G:\projects\TaskApplication\TaskApplication.Services\obj\Debug\TaskApplication.Services.csprojResolveAssemblyReference.cache
+G:\projects\TaskApplication\TaskApplication.Services\obj\Debug\TaskApplication.Services.dll
+G:\projects\TaskApplication\TaskApplication.Services\obj\Debug\TaskApplication.Services.pdb

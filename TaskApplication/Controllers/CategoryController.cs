@@ -14,7 +14,7 @@ namespace TaskApplication.Controllers
     public class CategoryController : Controller
     {
         private CategoryService categoryService = new CategoryService();
-        //private CategoryReposiltory categoryReposiltory = new CategoryReposiltory();
+        
         //
         // GET: /Category/
 
@@ -81,7 +81,6 @@ namespace TaskApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(category).State = EntityState.Modified;
                 categoryService.Edit(category);
                 return RedirectToAction("Index");
             }
@@ -93,7 +92,7 @@ namespace TaskApplication.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Category category = categoryService.FindSingleBy(id); // .Categories.Find(id);
+            Category category = categoryService.FindSingleBy(id); 
             if (category == null)
             {
                 return HttpNotFound();
@@ -107,7 +106,6 @@ namespace TaskApplication.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            // Category category = categoryReposiltory.FindSingleBy(c => c.CategoryId == id);
             if (categoryService.IsUsed(id))
             {
                 ViewBag.ErrorMessage = "Cannot delete. Category is used.";

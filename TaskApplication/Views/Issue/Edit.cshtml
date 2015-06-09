@@ -1,5 +1,5 @@
-﻿@model TaskApplication.Models.Issue
-@using TaskApplication.Models
+﻿@model TaskApplication.DataAccess.Entities.Issue
+@using TaskApplication.DataAccess.Entities
 
 @{
     ViewBag.Title = "Edit issue";
@@ -38,7 +38,6 @@
             @Html.DropDownListFor(model => model.StatusId, new SelectList((IEnumerable<Status>)ViewBag.Statuses, "StatusId", "StatusName"))
             @Html.ValidationMessageFor(model => model.StatusId)
         </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.CategoryId)
         </div>

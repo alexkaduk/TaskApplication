@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using TaskApplication.DataAccess.Entities;
 
 namespace TaskApplication.DataAccess.Repositories
 {
@@ -15,15 +16,19 @@ namespace TaskApplication.DataAccess.Repositories
         private C _entities = new C();
         public C Context
         {
-
             get { return _entities; }
             set { _entities = value; }
         }
 
         public virtual IQueryable<T> GetAll()
         {
-
             IQueryable<T> query = _entities.Set<T>();
+            return query;
+        }
+
+        public virtual IQueryable<Status> GetAllStatuses()
+        {
+            IQueryable<Status> query = _entities.Set<Status>();
             return query;
         }
 

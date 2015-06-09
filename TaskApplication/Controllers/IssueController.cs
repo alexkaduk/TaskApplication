@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TaskApplication.DataAccess.Entities;
+using TaskApplication.DataAccess.Repositories;
 using TaskApplication.Models;
+using TaskApplication.Services.Concrete;
 
 namespace TaskApplication.Controllers
 {
     public class IssueController : Controller
     {
-        private TaskContex db = new TaskContex();
+        //private TaskContex db = new TaskContex();
+        private IssueService issueService = new IssueService();
+        private CategoryService categoryService = new CategoryService();
+        private StatusService statusService = new StatusService();
 
         //
         // GET: /Issue/
@@ -21,13 +25,22 @@ namespace TaskApplication.Controllers
         {
             /*   ViewBag.Statuses = db.Statuses;
 
-               if (!db.Issues.Any(i => i.StatusId == (int)Statuses.Resolved))
+               if (!issueService.IsAnyResolved)
                {
                    ViewBag.isAnyResolvedIssue = "Delete all resolved issues (nothing to do)";
                }
 
                return View(db.Issues.OrderBy(i => i.CategoryId).ToList());*/
-            return View(new List<Issue>());
+            //return View(new List<Issue>());
+
+            ViewBag.Statuses = statusService.GetAll();
+
+            if (!issueService.IsAnyResolved())
+            {
+                ViewBag.isAnyResolvedIssue = "Delete all resolved issues (nothing to do)";
+            }
+
+            return View(issueService.GetAll());
         }
 
         //
@@ -35,13 +48,12 @@ namespace TaskApplication.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            /*Issue issue = db.Issues.Find(id);
+            Issue issue = issueService.FindSingleBy(id);
             if (issue == null)
             {
                 return HttpNotFound();
             }
-            return View(issue);*/
-            return View(new List<Issue>());
+            return View(issue);
         }
 
         //
@@ -52,6 +64,10 @@ namespace TaskApplication.Controllers
             /*ViewBag.Categories = db.Categories;
             ViewBag.Statuses = db.Statuses;
             */
+
+            ViewBag.Categories = categoryService.GetAll();
+            ViewBag.Statuses = statusService.GetAll();
+
             return View();
         }
 
@@ -61,20 +77,28 @@ namespace TaskApplication.Controllers
         [HttpPost]
         public ActionResult Create(Issue issue)
         {
-         /*   issue.IssueCreateDate = DateTime.Now;
-            issue.IssueUpdateDate = DateTime.Now;
+            /*   issue.IssueCreateDate = DateTime.Now;
+               issue.IssueUpdateDate = DateTime.Now;
 
-            issue.StatusId = db.Statuses.First(s => s.StatusName == "Open").StatusId;
+               issue.StatusId = db.Statuses.First(s => s.StatusName == "Open").StatusId;
+               if (ModelState.IsValid)
+               {
+                   db.Issues.Add(issue);
+                   db.SaveChanges();
+                   return RedirectToAction("Index");
+               }
+
+               return View(issue);
+               */
+            //return View(new Issue());
+
             if (ModelState.IsValid)
             {
-                db.Issues.Add(issue);
-                db.SaveChanges();
+                issueService.Add(issue);
                 return RedirectToAction("Index");
             }
 
             return View(issue);
-            */
-            return View(new Issue());
         }
 
         //
@@ -92,7 +116,15 @@ namespace TaskApplication.Controllers
             ViewBag.Statuses = db.Statuses;
             return View(issue);
             */
-            return View(new Issue());
+            ViewBag.Categories = categoryService.GetAll();
+            ViewBag.Statuses = statusService.GetAll();
+
+            Issue issue = issueService.FindSingleBy(id);
+            if (issue == null)
+            {
+                return HttpNotFound();
+            }
+            return View(issue);
         }
 
         //
@@ -116,7 +148,13 @@ namespace TaskApplication.Controllers
             }
             return View(issue);
             */
-            return View(new Issue());
+
+            if (ModelState.IsValid)
+            {
+                issueService.Edit(issue);
+                return RedirectToAction("Index");
+            }
+            return View(issue);
         }
 
         //
@@ -132,7 +170,12 @@ namespace TaskApplication.Controllers
             }
             return View(issue);
             */
-            return View(new Issue());
+            Issue issue = issueService.FindSingleBy(id);
+            if (issue == null)
+            {
+                return HttpNotFound();
+            }
+            return View(issue);
         }
 
         //
@@ -155,7 +198,17 @@ namespace TaskApplication.Controllers
                 return RedirectToAction("Index");
             }
             */
-            return View(new Issue());
+
+            if (issueService.IsUsed(id))
+            {
+                ViewBag.ErrorMessage = "Cannot delete. Issue is used.";
+                return View(issueService.FindSingleBy(id));
+            }
+            else
+            {
+                issueService.Delete(id);
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult DeleteResolved()

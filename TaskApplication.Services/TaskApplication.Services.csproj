@@ -47,7 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Concrete\CategoryService.cs" />
+    <Compile Include="Concrete\StatusService.cs" />
+    <Compile Include="Concrete\IssueService.cs" />
+    <Compile Include="Concrete\SubTaskService.cs" />
+    <Compile Include="Interfaces\IStatusService.cs" />
     <Compile Include="Interfaces\ICategoryService.cs" />
+    <Compile Include="Interfaces\IIssueService.cs" />
+    <Compile Include="Interfaces\ISubTaskService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

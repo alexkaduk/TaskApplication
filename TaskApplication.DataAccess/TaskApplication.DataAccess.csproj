@@ -54,8 +54,10 @@
     <Compile Include="Entities\TaskContexInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Concrete\CategoryReposiltory.cs" />
+    <Compile Include="Repositories\Concrete\StatusReposiltory.cs" />
     <Compile Include="Repositories\Concrete\SubTaskReposiltory.cs" />
     <Compile Include="Repositories\Concrete\IssueReposiltory.cs" />
+    <Compile Include="Repositories\Interfaces\IStatusRepository.cs" />
     <Compile Include="Repositories\Interfaces\IIssueRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISubTaskRepository.cs" />
     <Compile Include="Repositories\Concrete\GenericRepository.cs" />

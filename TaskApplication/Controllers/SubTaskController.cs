@@ -4,12 +4,28 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TaskApplication.DataAccess.Entities;
+using TaskApplication.DataAccess.Repositories;
 using TaskApplication.Models;
+using TaskApplication.Services.Concrete;
 
 namespace TaskApplication.Controllers
 {
     public class SubTaskController : Controller
     {
+
+        private SubTaskService subTaskService = new SubTaskService();
+
+        public ActionResult _Index(int issueId, bool isEdit = true)
+        {
+            ViewBag.IssueId = issueId;
+            ViewBag.IsEdit = isEdit;
+            var subTasks = subTaskService.GetAllByIssueId(issueId);
+            return PartialView("_Index", subTasks);
+        }
+        //
+        // GET: /SubTask
+
        /* private TaskContex db = new TaskContex();
 
         //
