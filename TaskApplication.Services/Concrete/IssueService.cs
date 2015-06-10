@@ -6,18 +6,29 @@ using System.Threading.Tasks;
 using TaskApplication.Services.Interfaces;
 using TaskApplication.DataAccess.Repositories;
 using TaskApplication.DataAccess.Entities;
+using log4net;
 
 namespace TaskApplication.Services.Concrete
 {
     public class IssueService : IIssueService
     {
+        public static readonly ILog log = LogManager.GetLogger(typeof(IssueService));
         private IssueReposiltory issueReposiltory = new IssueReposiltory();
         private StatusReposiltory statusReposiltory = new StatusReposiltory();
         private SubTaskReposiltory subTaskReposiltory = new SubTaskReposiltory();
 
         public IEnumerable<Issue> GetAll()
         {
-            return issueReposiltory.GetAll();
+            try
+            {
+                return issueReposiltory.GetAll();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return new Issue[0];
+            }
+
         }
 
         public Issue FindSingleBy(int id)
@@ -27,8 +38,7 @@ namespace TaskApplication.Services.Concrete
 
         public void Add(Issue issue)
         {
-            issue.IssueCreateDate = DateTime.Now;
-            issue.IssueUpdateDate = DateTime.Now;
+            issue.IssueCreateDate = issue.IssueUpdateDate = DateTime.Now;
             issue.StatusId = statusReposiltory.FindSingleBy(s => s.StatusName == "Open").StatusId;
 
             issueReposiltory.Add(issue);
@@ -39,7 +49,7 @@ namespace TaskApplication.Services.Concrete
         {
             //categoryReposiltory.Edit(category);
             //categoryReposiltory.Save();
-           
+
             /*
            Issue oldIssue = db.Issues.Find(issue.IssueId);
            db.Entry(oldIssue).State = EntityState.Detached;
@@ -55,8 +65,7 @@ namespace TaskApplication.Services.Concrete
            }
            return View(issue);
            */
-            Issue oldIssue = issueReposiltory.FindSingleBy(i => i.IssueId == issue.IssueId);
-            // db.Entry(oldIssue).State = EntityState.Detached;
+            Issue oldIssue = issueReposiltory.FindSingleBy(i => i.IssueId == issue.IssueId, true);
 
             issue.IssueCreateDate = oldIssue.IssueCreateDate;
             issue.IssueUpdateDate = DateTime.Now;
@@ -79,7 +88,7 @@ namespace TaskApplication.Services.Concrete
                 issueReposiltory.Delete(issue);
                 issueReposiltory.Save();
             }
-            
+
         }
 
         public bool IsUsed(int id)
@@ -91,6 +100,26 @@ namespace TaskApplication.Services.Concrete
         {
             //!db.Issues.Any(i => i.StatusId == (int)Statuses.Resolved)
             return issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).Any();
+        }
+
+        public IEnumerable<Issue> GetAllResolved()
+        {
+            return issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).ToList();
+        }
+
+        public void DeleteAllResolved()
+        {
+            var resovledIssues = GetAllResolved();
+            foreach (Issue issue in resovledIssues)
+            {
+                foreach (var subtask in issue.SubTasks.ToArray())
+                {
+                    subTaskReposiltory.Delete(subtask);
+                }
+                issueReposiltory.Delete(issue);
+            }
+            subTaskReposiltory.Save();
+            issueReposiltory.Save();
         }
 
         public bool ChangeStatusIfAllSubTasksResolved(Issue issue)

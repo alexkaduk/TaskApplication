@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using TaskApplication.Services.Interfaces;
 using TaskApplication.DataAccess.Repositories;
 using TaskApplication.DataAccess.Entities;
+using log4net;
 
 namespace TaskApplication.Services.Concrete
 {
     public class CategoryService : ICategoryService
     {
+        public static readonly ILog log = LogManager.GetLogger(typeof(CategoryService));
         private CategoryReposiltory categoryReposiltory = new CategoryReposiltory();
         private IssueReposiltory issueReposiltory = new IssueReposiltory();
 

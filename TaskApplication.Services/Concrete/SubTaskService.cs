@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 using TaskApplication.Services.Interfaces;
 using TaskApplication.DataAccess.Repositories;
 using TaskApplication.DataAccess.Entities;
+using log4net;
 
 namespace TaskApplication.Services.Concrete
 {
     public class SubTaskService : ISubTaskService
     {
+        public static readonly ILog log = LogManager.GetLogger(typeof(SubTaskService));
+
         // private CategoryReposiltory categoryReposiltory = new CategoryReposiltory();
         private IssueReposiltory issueReposiltory = new IssueReposiltory();
         private SubTaskReposiltory subTaskReposiltory = new SubTaskReposiltory();
@@ -25,23 +28,30 @@ namespace TaskApplication.Services.Concrete
             return subTaskReposiltory.FindBy(s => s.IssueId == id).ToList();
         }
 
-        public SubTask FindSingleBy(int id)
+        public SubTask FindSingleBy(int id, bool isDetached = false)
         {
-            return subTaskReposiltory.FindSingleBy(s => s.SubTaskId == id);
+            return subTaskReposiltory.FindSingleBy(s => s.SubTaskId == id, isDetached);
         }
 
         public void ChangeStatusOpenResolve(SubTask subTask)
         {
-            if (subTask.StatusId == (int)Statuses.Open)
+            try
             {
-                subTask.StatusId = (int)Statuses.Resolved;
-            }
-            else if (subTask.StatusId == (int)Statuses.Resolved)
-            {
-                subTask.StatusId = (int)Statuses.Open;
-            }
+                if (subTask.StatusId == (int)Statuses.Open)
+                {
+                    subTask.StatusId = (int)Statuses.Resolved;
+                }
+                else if (subTask.StatusId == (int)Statuses.Resolved)
+                {
+                    subTask.StatusId = (int)Statuses.Open;
+                }
 
-            subTaskReposiltory.Save();
+                subTaskReposiltory.Save();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void Add(SubTask subTask)
@@ -81,22 +91,19 @@ namespace TaskApplication.Services.Concrete
             issueReposiltory.Edit(issue);
             issueReposiltory.Save();
              */
-            var oldSubtask = FindSingleBy(subTask.SubTaskId);
+            var oldSubtask = FindSingleBy(subTask.SubTaskId, true);
             subTask.IssueId = oldSubtask.IssueId;
             subTaskReposiltory.Edit(subTask);
             subTaskReposiltory.Save();
 
-            var issue = issueReposiltory.FindSingleBy(i => i.StatusId == subTask.IssueId);
-            /*якщо всі сабтаски завершені, ішю треба завершити
-                {
-                    issue.StatusId = (int)Statuses.Resolved;
-                    db.SaveChanges();
-                }
-             * return RedirectToAction("Edit", "Issue", new { id = subtask.IssueId });
-             * }
-             * return View(subtask);
-             */
+            var issue = issueReposiltory.FindSingleBy(i => i.IssueId == subTask.IssueId);
 
+            if (!issue.SubTasks.Where(s => s.StatusId == (int)Statuses.Open).Any())
+            {
+                issue.StatusId = (int)Statuses.Resolved;
+
+                issueReposiltory.Save();
+            }
         }
 
         public void Delete(int id)

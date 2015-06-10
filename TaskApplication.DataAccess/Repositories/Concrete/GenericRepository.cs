@@ -32,9 +32,13 @@ namespace TaskApplication.DataAccess.Repositories
             return query;
         }
 
-        public T FindSingleBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        public T FindSingleBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate, bool isDetached = false)
         {
             T query = _entities.Set<T>().Where(predicate).FirstOrDefault();
+            if (isDetached)
+            {
+                _entities.Entry(query).State = EntityState.Detached;
+            }
             return query;
         }
 

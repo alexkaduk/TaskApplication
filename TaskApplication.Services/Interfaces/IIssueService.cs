@@ -16,5 +16,7 @@ namespace TaskApplication.Services.Interfaces
         void Delete(int id);
         bool IsUsed(int id);
         bool IsAnyResolved();
+        IEnumerable<Issue> GetAllResolved();
+        void DeleteAllResolved();
     }
 }

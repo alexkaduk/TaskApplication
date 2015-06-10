@@ -213,15 +213,13 @@ namespace TaskApplication.Controllers
 
         public ActionResult DeleteResolved()
         {
-            /*
-            var resovledIssues = db.Issues.Where(i => i.StatusId == (int)Statuses.Resolved).ToList();
+
+            var resovledIssues = issueService.GetAllResolved();
             if (resovledIssues == null)
             {
                 return HttpNotFound();
             }
             return View(resovledIssues);
-             * */
-            return View(new Issue());
         }
 
         //
@@ -230,16 +228,8 @@ namespace TaskApplication.Controllers
         [HttpPost, ActionName("DeleteResolved")]
         public ActionResult DeleteResolvedConfirmed()
         {
-            /*var resovledIssues = db.Issues.Where(i => i.StatusId == (int)Statuses.Resolved).ToList();
-            foreach (Issue issue in resovledIssues)
-            {
-                foreach (var subtask in issue.SubTasks.ToArray())
-                {
-                    db.SubTasks.Remove(subtask);
-                }
-                db.Issues.Remove(issue);
-            }
-            db.SaveChanges();*/
+            issueService.DeleteAllResolved();
+
             return RedirectToAction("Index");
         }
     }

@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using log4net.Config;
 using TaskApplication.Models;
 
 namespace TaskApplication
@@ -19,6 +20,7 @@ namespace TaskApplication
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            XmlConfigurator.Configure();
 
             Database.SetInitializer(new TaskContexInitializer());
             WebApiConfig.Register(GlobalConfiguration.Configuration);
