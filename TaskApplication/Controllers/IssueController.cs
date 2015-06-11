@@ -13,7 +13,6 @@ namespace TaskApplication.Controllers
 {
     public class IssueController : Controller
     {
-        //private TaskContex db = new TaskContex();
         private IssueService issueService = new IssueService();
         private CategoryService categoryService = new CategoryService();
         private StatusService statusService = new StatusService();
@@ -23,16 +22,6 @@ namespace TaskApplication.Controllers
 
         public ActionResult Index()
         {
-            /*   ViewBag.Statuses = db.Statuses;
-
-               if (!issueService.IsAnyResolved)
-               {
-                   ViewBag.isAnyResolvedIssue = "Delete all resolved issues (nothing to do)";
-               }
-
-               return View(db.Issues.OrderBy(i => i.CategoryId).ToList());*/
-            //return View(new List<Issue>());
-
             ViewBag.Statuses = statusService.GetAll();
 
             if (!issueService.IsAnyResolved())
@@ -40,7 +29,13 @@ namespace TaskApplication.Controllers
                 ViewBag.isAnyResolvedIssue = "Delete all resolved issues (nothing to do)";
             }
 
-            return View(issueService.GetAll());
+            IEnumerable<Issue> issues = issueService.GetAll();
+            if (issues == null || issues.Count() == 0)
+            {
+                return HttpNotFound();
+            }
+
+            return View(issues);
         }
 
         //
@@ -61,10 +56,6 @@ namespace TaskApplication.Controllers
 
         public ActionResult Create()
         {
-            /*ViewBag.Categories = db.Categories;
-            ViewBag.Statuses = db.Statuses;
-            */
-
             ViewBag.Categories = categoryService.GetAll();
             ViewBag.Statuses = statusService.GetAll();
 
@@ -77,21 +68,6 @@ namespace TaskApplication.Controllers
         [HttpPost]
         public ActionResult Create(Issue issue)
         {
-            /*   issue.IssueCreateDate = DateTime.Now;
-               issue.IssueUpdateDate = DateTime.Now;
-
-               issue.StatusId = db.Statuses.First(s => s.StatusName == "Open").StatusId;
-               if (ModelState.IsValid)
-               {
-                   db.Issues.Add(issue);
-                   db.SaveChanges();
-                   return RedirectToAction("Index");
-               }
-
-               return View(issue);
-               */
-            //return View(new Issue());
-
             if (ModelState.IsValid)
             {
                 issueService.Add(issue);
@@ -106,16 +82,6 @@ namespace TaskApplication.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            /*
-            Issue issue = db.Issues.Find(id);
-            if (issue == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Categories = db.Categories;
-            ViewBag.Statuses = db.Statuses;
-            return View(issue);
-            */
             ViewBag.Categories = categoryService.GetAll();
             ViewBag.Statuses = statusService.GetAll();
 
@@ -133,22 +99,6 @@ namespace TaskApplication.Controllers
         [HttpPost]
         public ActionResult Edit(Issue issue)
         {
-            /*
-            Issue oldIssue = db.Issues.Find(issue.IssueId);
-            db.Entry(oldIssue).State = EntityState.Detached;
-
-            issue.IssueCreateDate = oldIssue.IssueCreateDate;
-            issue.IssueUpdateDate = DateTime.Now;
-
-            if (ModelState.IsValid)
-            {
-                db.Entry(issue).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(issue);
-            */
-
             if (ModelState.IsValid)
             {
                 issueService.Edit(issue);
@@ -162,14 +112,6 @@ namespace TaskApplication.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            /*
-            Issue issue = db.Issues.Find(id);
-            if (issue == null)
-            {
-                return HttpNotFound();
-            }
-            return View(issue);
-            */
             Issue issue = issueService.FindSingleBy(id);
             if (issue == null)
             {
@@ -184,21 +126,6 @@ namespace TaskApplication.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            /*
-            Issue issue = db.Issues.Find(id);
-            if (db.SubTasks.Any(s => s.IssueId == id))
-            {
-                ViewBag.ErrorMessage = "Cannot delete. Issue is used.";
-                return View(issue);
-            }
-            else
-            {
-                db.Issues.Remove(issue);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            */
-
             if (issueService.IsUsed(id))
             {
                 ViewBag.ErrorMessage = "Cannot delete. Issue is used.";

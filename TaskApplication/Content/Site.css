@@ -615,6 +615,11 @@ tr.pager td {
     color: red;
 }
 
+.table-category-title {
+    text-align: left;
+    font-weight: bold;
+}
+
 /********************
 *   Mobile Styles   *
 ********************/

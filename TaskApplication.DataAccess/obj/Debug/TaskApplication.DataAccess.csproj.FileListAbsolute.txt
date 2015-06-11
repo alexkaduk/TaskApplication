@@ -7,3 +7,13 @@ D:\Projects\TaskApplication.git\trunk\TaskApplication.DataAccess\bin\Debug\Entit
 D:\Projects\TaskApplication.git\trunk\TaskApplication.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
 D:\Projects\TaskApplication.git\trunk\TaskApplication.DataAccess\obj\Debug\TaskApplication.DataAccess.dll
 D:\Projects\TaskApplication.git\trunk\TaskApplication.DataAccess\obj\Debug\TaskApplication.DataAccess.pdb
+G:\projects\TaskApplication\TaskApplication.DataAccess\bin\Debug\TaskApplication.DataAccess.dll.config
+G:\projects\TaskApplication\TaskApplication.DataAccess\bin\Debug\TaskApplication.DataAccess.dll
+G:\projects\TaskApplication\TaskApplication.DataAccess\bin\Debug\TaskApplication.DataAccess.pdb
+G:\projects\TaskApplication\TaskApplication.DataAccess\bin\Debug\EntityFramework.dll
+G:\projects\TaskApplication\TaskApplication.DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+G:\projects\TaskApplication\TaskApplication.DataAccess\bin\Debug\EntityFramework.xml
+G:\projects\TaskApplication\TaskApplication.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+G:\projects\TaskApplication\TaskApplication.DataAccess\obj\Debug\TaskApplication.DataAccess.csprojResolveAssemblyReference.cache
+G:\projects\TaskApplication\TaskApplication.DataAccess\obj\Debug\TaskApplication.DataAccess.dll
+G:\projects\TaskApplication\TaskApplication.DataAccess\obj\Debug\TaskApplication.DataAccess.pdb

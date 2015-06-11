@@ -21,7 +21,7 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                return issueReposiltory.GetAll();
+                return issueReposiltory.GetAll().OrderBy(i => i.CategoryId);
             }
             catch (Exception ex)
             {
@@ -33,104 +33,147 @@ namespace TaskApplication.Services.Concrete
 
         public Issue FindSingleBy(int id)
         {
-            return issueReposiltory.FindSingleBy(i => i.IssueId == id);
+            try
+            {
+                return issueReposiltory.FindSingleBy(i => i.IssueId == id);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return new Issue();
+            }
+
         }
 
         public void Add(Issue issue)
         {
-            issue.IssueCreateDate = issue.IssueUpdateDate = DateTime.Now;
-            issue.StatusId = statusReposiltory.FindSingleBy(s => s.StatusName == "Open").StatusId;
+            try
+            {
+                issue.IssueCreateDate = issue.IssueUpdateDate = DateTime.Now;
+                issue.StatusId = statusReposiltory.FindSingleBy(s => s.StatusName == "Open").StatusId;
 
-            issueReposiltory.Add(issue);
-            issueReposiltory.Save();
+                issueReposiltory.Add(issue);
+                issueReposiltory.Save();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void Edit(Issue issue)
         {
-            //categoryReposiltory.Edit(category);
-            //categoryReposiltory.Save();
+            try
+            {
+                Issue oldIssue = issueReposiltory.FindSingleBy(i => i.IssueId == issue.IssueId, true);
 
-            /*
-           Issue oldIssue = db.Issues.Find(issue.IssueId);
-           db.Entry(oldIssue).State = EntityState.Detached;
+                issue.IssueCreateDate = oldIssue.IssueCreateDate;
+                issue.IssueUpdateDate = DateTime.Now;
 
-           issue.IssueCreateDate = oldIssue.IssueCreateDate;
-           issue.IssueUpdateDate = DateTime.Now;
-
-           if (ModelState.IsValid)
-           {
-               db.Entry(issue).State = EntityState.Modified;
-               db.SaveChanges();
-               return RedirectToAction("Index");
-           }
-           return View(issue);
-           */
-            Issue oldIssue = issueReposiltory.FindSingleBy(i => i.IssueId == issue.IssueId, true);
-
-            issue.IssueCreateDate = oldIssue.IssueCreateDate;
-            issue.IssueUpdateDate = DateTime.Now;
-
-            issueReposiltory.Edit(issue);
-            issueReposiltory.Save();
+                issueReposiltory.Edit(issue);
+                issueReposiltory.Save();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void Delete(int id)
         {
-            //Category category = FindSingleBy(id);
-            //if (category != null)
-            //{
-            //    categoryReposiltory.Delete(category);
-            //    categoryReposiltory.Save();
-            //}
-            Issue issue = FindSingleBy(id);
-            if (issue != null)
+            try
             {
-                issueReposiltory.Delete(issue);
-                issueReposiltory.Save();
+                Issue issue = FindSingleBy(id);
+                if (issue != null)
+                {
+                    issueReposiltory.Delete(issue);
+                    issueReposiltory.Save();
+                }
             }
-
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public bool IsUsed(int id)
         {
-            return subTaskReposiltory.FindBy(s => s.IssueId == id).Any();
+            try
+            {
+                return subTaskReposiltory.FindBy(s => s.IssueId == id).Any();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
+            }
         }
 
         public bool IsAnyResolved()
         {
-            //!db.Issues.Any(i => i.StatusId == (int)Statuses.Resolved)
-            return issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).Any();
+            try
+            {
+                return issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).Any();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
+            }
         }
 
         public IEnumerable<Issue> GetAllResolved()
         {
-            return issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).ToList();
+            try
+            {
+                return issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).ToList();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return new Issue[0];
+            }
         }
 
         public void DeleteAllResolved()
         {
-            var resovledIssues = GetAllResolved();
-            foreach (Issue issue in resovledIssues)
+            try
             {
-                foreach (var subtask in issue.SubTasks.ToArray())
+                var resovledIssues = GetAllResolved();
+                foreach (Issue issue in resovledIssues)
                 {
-                    subTaskReposiltory.Delete(subtask);
+                    foreach (var subtask in issue.SubTasks.ToArray())
+                    {
+                        subTaskReposiltory.Delete(subtask);
+                    }
+                    issueReposiltory.Delete(issue);
                 }
-                issueReposiltory.Delete(issue);
+                subTaskReposiltory.Save();
+                issueReposiltory.Save();
             }
-            subTaskReposiltory.Save();
-            issueReposiltory.Save();
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public bool ChangeStatusIfAllSubTasksResolved(Issue issue)
         {
-            if (issue.SubTasks.All(s => s.StatusId == (int)Statuses.Resolved))
+            try
             {
-                issue.StatusId = (int)Statuses.Resolved;
-                issueReposiltory.Save();
-                return true;
+                if (issue.SubTasks.All(s => s.StatusId == (int)Statuses.Resolved))
+                {
+                    issue.StatusId = (int)Statuses.Resolved;
+                    issueReposiltory.Save();
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
+            }
         }
     }
 }

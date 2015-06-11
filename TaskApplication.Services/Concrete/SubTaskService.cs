@@ -20,17 +20,41 @@ namespace TaskApplication.Services.Concrete
 
         public IEnumerable<SubTask> GetAll()
         {
-            return subTaskReposiltory.GetAll();
+            try
+            {
+                return subTaskReposiltory.GetAll();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return new SubTask[0];
+            }
         }
 
         public IEnumerable<SubTask> GetAllByIssueId(int id)
         {
-            return subTaskReposiltory.FindBy(s => s.IssueId == id).ToList();
+            try
+            {
+                return subTaskReposiltory.FindBy(s => s.IssueId == id).ToList();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return new SubTask[0];
+            }
         }
 
         public SubTask FindSingleBy(int id, bool isDetached = false)
         {
-            return subTaskReposiltory.FindSingleBy(s => s.SubTaskId == id, isDetached);
+            try
+            {
+                return subTaskReposiltory.FindSingleBy(s => s.SubTaskId == id, isDetached);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return new SubTask();
+            }
         }
 
         public void ChangeStatusOpenResolve(SubTask subTask)
@@ -56,70 +80,60 @@ namespace TaskApplication.Services.Concrete
 
         public void Add(SubTask subTask)
         {
-            subTaskReposiltory.Add(subTask);
-            subTaskReposiltory.Save();
+            try
+            {
+                subTaskReposiltory.Add(subTask);
+                subTaskReposiltory.Save();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void Edit(SubTask subTask)
         {
-            /*
-             var oldSubtask = db.SubTasks.Find(subtask.SubTaskId);
-            subtask.IssueId = oldSubtask.IssueId;
-            db.Entry(oldSubtask).State = EntityState.Detached;
-
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(subtask).State = EntityState.Modified;
-                db.SaveChanges();
-                var issue = db.Issues.Find(subtask.IssueId);
-                if (issue.SubTasks.All(s => s.StatusId == (int)Statuses.Resolved))
+                var oldSubtask = FindSingleBy(subTask.SubTaskId, true);
+                subTask.IssueId = oldSubtask.IssueId;
+                subTaskReposiltory.Edit(subTask);
+                subTaskReposiltory.Save();
+
+                var issue = issueReposiltory.FindSingleBy(i => i.IssueId == subTask.IssueId);
+
+                if (!issue.SubTasks.Where(s => s.StatusId == (int)Statuses.Open).Any())
                 {
                     issue.StatusId = (int)Statuses.Resolved;
-                    db.SaveChanges();
+
+                    issueReposiltory.Save();
                 }
-                return RedirectToAction("Edit", "Issue", new { id = subtask.IssueId });
             }
-            return View(subtask);
-             */
-            /*
-             Issue oldIssue = issueReposiltory.FindSingleBy(i => i.IssueId == issue.IssueId);
-            // db.Entry(oldIssue).State = EntityState.Detached;
-
-            issue.IssueCreateDate = oldIssue.IssueCreateDate;
-            issue.IssueUpdateDate = DateTime.Now;
-
-            issueReposiltory.Edit(issue);
-            issueReposiltory.Save();
-             */
-            var oldSubtask = FindSingleBy(subTask.SubTaskId, true);
-            subTask.IssueId = oldSubtask.IssueId;
-            subTaskReposiltory.Edit(subTask);
-            subTaskReposiltory.Save();
-
-            var issue = issueReposiltory.FindSingleBy(i => i.IssueId == subTask.IssueId);
-
-            if (!issue.SubTasks.Where(s => s.StatusId == (int)Statuses.Open).Any())
+            catch (Exception ex)
             {
-                issue.StatusId = (int)Statuses.Resolved;
-
-                issueReposiltory.Save();
+                log.Error(ex.Message, ex);
             }
         }
 
         public void Delete(int id)
         {
-            SubTask subTask = FindSingleBy(id);
-            if (subTask != null)
+            try
             {
-                subTaskReposiltory.Delete(subTask);
-                subTaskReposiltory.Save();
+                SubTask subTask = FindSingleBy(id);
+                if (subTask != null)
+                {
+                    subTaskReposiltory.Delete(subTask);
+                    subTaskReposiltory.Save();
+                }
             }
-
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
-
-        public bool IsUsed(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //public bool IsUsed(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

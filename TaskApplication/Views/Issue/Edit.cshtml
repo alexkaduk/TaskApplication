@@ -47,17 +47,16 @@
         </div>
 
         <p>
-            <input type="submit" value="Save" />
+            <input type="submit" value="Save" /> @Html.ActionLink("Back to List", "Index")
         </p>
+        
     </fieldset>
 }
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 <hr>
 
-    @Html.Action("_GetSubTasks", "SubTask", new { issueId = Model.IssueId })
+@Html.Action("_GetSubTasks", "SubTask", new { issueId = Model.IssueId })
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

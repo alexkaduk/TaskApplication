@@ -18,39 +18,85 @@ namespace TaskApplication.Services.Concrete
 
         public IEnumerable<Category> GetAll()
         {
-            return categoryReposiltory.GetAll();
+            try
+            {
+                return categoryReposiltory.GetAll();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return new Category[0];
+            }
         }
 
         public Category FindSingleBy(int id)
         {
-            return categoryReposiltory.FindSingleBy(c => c.CategoryId == id);
+            try
+            {
+                return categoryReposiltory.FindSingleBy(c => c.CategoryId == id);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return new Category();
+            }
         }
 
         public void Add(Category category)
         {
-            categoryReposiltory.Add(category);
-            categoryReposiltory.Save();
+            try
+            {
+                categoryReposiltory.Add(category);
+                categoryReposiltory.Save();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void Edit(Category category)
         {
-            categoryReposiltory.Edit(category);
-            categoryReposiltory.Save();
+            try
+            {
+                categoryReposiltory.Edit(category);
+                categoryReposiltory.Save();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void Delete(int id)
         {
-            Category category = FindSingleBy(id);
-            if (category != null)
+            try
             {
-                categoryReposiltory.Delete(category);
-                categoryReposiltory.Save();
+                Category category = FindSingleBy(id);
+                if (category != null)
+                {
+                    categoryReposiltory.Delete(category);
+                    categoryReposiltory.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
             }
         }
 
         public bool IsUsed(int id)
         {
-            return issueReposiltory.FindBy(i => i.CategoryId == id).Any();
+            try
+            {
+                return issueReposiltory.FindBy(i => i.CategoryId == id).Any();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
+            }
+            
         }
     }
 }

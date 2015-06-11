@@ -16,6 +16,6 @@ namespace TaskApplication.Services.Interfaces
         void Add(SubTask subTask);
         void Edit(SubTask subTask);
         void Delete(int id);
-        bool IsUsed(int id);
+        //bool IsUsed(int id);
     }
 }

@@ -42,14 +42,11 @@
         </div>
 
         <p>
-            <input type="submit" value="Save" />
+            <input type="submit" value="Save" />@Html.ActionLink("Back to Issue", "Edit", "Issue", new { id = Model.IssueId }, null)
         </p>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to Issue", "Edit", "Issue", new { id = Model.IssueId }, null)
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

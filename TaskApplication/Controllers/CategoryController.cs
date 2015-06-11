@@ -14,13 +14,19 @@ namespace TaskApplication.Controllers
     public class CategoryController : Controller
     {
         private CategoryService categoryService = new CategoryService();
-        
+
         //
         // GET: /Category/
 
         public ActionResult Index()
         {
-            return View(categoryService.GetAll());
+            IEnumerable<Category> categories = categoryService.GetAll();
+            if (categories == null || categories.Count() == 0)
+            {
+                return HttpNotFound();
+            }
+
+            return View(categories);
         }
 
         //
@@ -92,7 +98,7 @@ namespace TaskApplication.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Category category = categoryService.FindSingleBy(id); 
+            Category category = categoryService.FindSingleBy(id);
             if (category == null)
             {
                 return HttpNotFound();
