@@ -166,3 +166,125 @@ System.InvalidOperationException: The object cannot be deleted because it was no
    в System.Data.Entity.DbSet`1.Remove(TEntity entity)
    в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в g:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
    в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в g:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 151
+2015-07-16 21:48:41,364 [25] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 151
+2015-07-16 21:52:34,935 [30] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The operation failed: The relationship could not be changed because one or more of the foreign-key properties is non-nullable. When a change is made to a relationship, the related foreign-key property is set to a null value. If the foreign-key does not support null values, a new relationship must be defined, the foreign-key property must be assigned another non-null value, or the unrelated object must be deleted.
+System.InvalidOperationException: The operation failed: The relationship could not be changed because one or more of the foreign-key properties is non-nullable. When a change is made to a relationship, the related foreign-key property is set to a null value. If the foreign-key does not support null values, a new relationship must be defined, the foreign-key property must be assigned another non-null value, or the unrelated object must be deleted.
+   в System.Data.Entity.Core.Objects.ObjectContext.PrepareToSaveChanges(SaveOptions options)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   в System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   в System.Data.Entity.Internal.InternalContext.SaveChanges()
+   в System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   в System.Data.Entity.DbContext.SaveChanges()
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Save() в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 69
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 159
+2015-07-16 21:56:43,777 [14] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 21:58:28,288 [12] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 21:58:31,984 [9] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 21:58:34,681 [15] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 21:58:44,138 [9] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 22:01:49,401 [16] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 22:14:25,286 [48] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 22:20:28,071 [64] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 22:20:31,641 [44] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 22:20:37,275 [47] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 22:20:48,911 [32] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 22:22:24,587 [15] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153
+2015-07-16 22:27:37,418 [23] ERROR TaskApplication.Services.Concrete.IssueService [(null)] - The object cannot be deleted because it was not found in the ObjectStateManager.
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteObject(Object entity)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Remove(Object entity)
+   в System.Data.Entity.DbSet`1.Remove(TEntity entity)
+   в TaskApplication.DataAccess.Repositories.GenericRepository`2.Delete(T entity) в h:\projects\TaskApplication\TaskApplication.DataAccess\Repositories\Concrete\GenericRepository.cs:строка 59
+   в TaskApplication.Services.Concrete.IssueService.DeleteAllResolved() в h:\projects\TaskApplication\TaskApplication.Services\Concrete\IssueService.cs:строка 153

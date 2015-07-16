@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using TaskApplication.Common;
 using TaskApplication.DataAccess.Entities;
-using TaskApplication.DataAccess.Repositories;
-using TaskApplication.Models;
-using TaskApplication.Services.Concrete;
 using TaskApplication.Services.Interfaces;
 
 namespace TaskApplication.Controllers

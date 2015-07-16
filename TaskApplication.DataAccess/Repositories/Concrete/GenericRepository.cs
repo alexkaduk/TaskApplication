@@ -56,7 +56,7 @@ namespace TaskApplication.DataAccess.Repositories
 
         public virtual void Delete(T entity)
         {
-            _entities.Set<T>().Remove(entity);
+                _entities.Set<T>().Remove(entity);
         }
 
         public virtual void Edit(T entity)

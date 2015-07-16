@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TaskApplication.Common;
 using TaskApplication.DataAccess.Entities;
-using TaskApplication.DataAccess.Repositories;
-using TaskApplication.Models;
-using TaskApplication.Services.Concrete;
 using TaskApplication.Services.Interfaces;
 
 namespace TaskApplication.Controllers
@@ -146,7 +140,6 @@ namespace TaskApplication.Controllers
         [HttpGet]
         public ActionResult DeleteResolved()
         {
-
             var resovledIssues = _issueService.GetAllResolved();
             if (resovledIssues == null)
             {
@@ -158,7 +151,7 @@ namespace TaskApplication.Controllers
         //
         // DELETE: /Issue/Delete/5
         //[HttpDelete, ActionName("DeleteResolved")]
-        [HttpPost, ActionName("DeleteResolved")]
+        [HttpDelete, ActionName("DeleteResolved")]
         public ActionResult DeleteResolvedConfirmed()
         {
             _issueService.DeleteAllResolved();

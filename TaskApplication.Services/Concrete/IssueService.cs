@@ -32,7 +32,6 @@ namespace TaskApplication.Services.Concrete
                 log.Error(ex.Message, ex);
                 return new Issue[0];
             }
-
         }
 
         public Issue FindSingleBy(int id)
@@ -46,7 +45,6 @@ namespace TaskApplication.Services.Concrete
                 log.Error(ex.Message, ex);
                 return new Issue();
             }
-
         }
 
         public void Add(Issue issue)
@@ -146,9 +144,9 @@ namespace TaskApplication.Services.Concrete
                 var resovledIssues = GetAllResolved();
                 foreach (Issue issue in resovledIssues)
                 {
-                    foreach (SubTask subtask in issue.SubTasks.ToArray())
+                    foreach (SubTask subtask in issue.SubTasks)
                     {
-                        _subTaskReposiltory.Delete(subtask);
+                       _subTaskReposiltory.Delete(subtask);
                     }
                     _issueReposiltory.Delete(issue);
                 }
