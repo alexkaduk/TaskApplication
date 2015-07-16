@@ -1,23 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using TaskApplication.Models;
+﻿using System.Web.Mvc;
 
 namespace TaskApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private TaskContex Repository = new TaskContex();
-
-        public ActionResult Index()
-        {
-            //ViewBag.Message = Repository.Statuses.FirstOrDefault().StatusName;
-
-            return View();
-        }
-
+        //
+        // GET: /Home/About
+        [HttpGet]
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";

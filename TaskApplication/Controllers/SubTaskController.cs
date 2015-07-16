@@ -4,41 +4,45 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TaskApplication.Common;
 using TaskApplication.DataAccess.Entities;
 using TaskApplication.DataAccess.Repositories;
 using TaskApplication.Models;
 using TaskApplication.Services.Concrete;
+using TaskApplication.Services.Interfaces;
 
 namespace TaskApplication.Controllers
 {
     public class SubTaskController : Controller
     {
 
-        private SubTaskService subTaskService = new SubTaskService();
-        private IssueService issueService = new IssueService();
-        private StatusService statusService = new StatusService();
+        //private SubTaskService _subTaskService = new SubTaskService();
+        //private IssueService _issueService = new IssueService();
+        //private StatusService _statusService = new StatusService();
 
-        //
-        // GET: /SubTask
+        private readonly ISubTaskService _subTaskService = Ioc.Get<ISubTaskService>();
+        private readonly IIssueService _issueService = Ioc.Get<IIssueService>();
+        private readonly IStatusService _statusService = Ioc.Get<IStatusService>();
+
         public ActionResult _Index(int issueId, bool isEdit = true)
         {
             ViewBag.IssueId = issueId;
             ViewBag.IsEdit = isEdit;
-            var subTasks = subTaskService.GetAllByIssueId(issueId);
+            var subTasks = _subTaskService.GetAllByIssueId(issueId);
             return PartialView("_Index", subTasks);
         }
 
         public PartialViewResult _ChangeSubTaskStatus(int issueId, int subTaskId)
         {
-            var subTask = subTaskService.FindSingleBy(subTaskId);
+            var subTask = _subTaskService.FindSingleBy(subTaskId, false);
 
-            subTaskService.ChangeStatusOpenResolve(subTask);
+            _subTaskService.ChangeStatusOpenResolve(subTask);
 
-            var issue = issueService.FindSingleBy(issueId);
+            var issue = _issueService.FindSingleBy(issueId);
 
-            ViewBag.IsIssueShouldBeUpdated = issueService.ChangeStatusIfAllSubTasksResolved(issue);
+            ViewBag.IsIssueShouldBeUpdated = _issueService.ChangeStatusIfAllSubTasksResolved(issue);
 
-            var subTasks = subTaskService.GetAllByIssueId(issueId);
+            var subTasks = _subTaskService.GetAllByIssueId(issueId);
 
             return PartialView("_Index", subTasks);
         }
@@ -47,7 +51,7 @@ namespace TaskApplication.Controllers
         {
             ViewBag.IssueId = issueId;
 
-            var subTasks = subTaskService.GetAllByIssueId(issueId);
+            var subTasks = _subTaskService.GetAllByIssueId(issueId);
 
             return PartialView("_GetSubTasks", subTasks);
         }
@@ -55,7 +59,7 @@ namespace TaskApplication.Controllers
         [ChildActionOnly]
         public PartialViewResult _SubTaskForm(int id)
         {
-            ViewBag.Statuses = statusService.GetAll();
+            ViewBag.Statuses = _statusService.GetAll();
 
             var model = new SubTask { IssueId = id };
             return PartialView("_SubTaskForm", model);
@@ -64,65 +68,23 @@ namespace TaskApplication.Controllers
         [ValidateAntiForgeryToken]
         public PartialViewResult _SubmitSubTask(SubTask subTask)
         {
-            subTaskService.Add(subTask);
+            _subTaskService.Add(subTask);
 
             ViewBag.IssueId = subTask.IssueId;
 
-            var subTasks = subTaskService.GetAllByIssueId(subTask.IssueId);
+            var subTasks = _subTaskService.GetAllByIssueId(subTask.IssueId);
 
             return PartialView("_GetSubTasks", subTasks);
         }
 
-
-        public ActionResult Index()
-        {
-            return View(subTaskService.GetAll());
-        }
-
-        //
-        // GET: /SubTask/Details/5
-
-        public ActionResult Details(int id = 0)
-        {
-            SubTask subtask = subTaskService.FindSingleBy(id);
-            if (subtask == null)
-            {
-                return HttpNotFound();
-            }
-            return View(subtask);
-        }
-
-        //
-        // GET: /SubTask/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /SubTask/Create
-
-        [HttpPost]
-        public ActionResult Create(SubTask subtask)
-        {
-            if (ModelState.IsValid)
-            {
-                subTaskService.Add(subtask);
-                return RedirectToAction("Index");
-            }
-
-            return View(subtask);
-        }
-
         //
         // GET: /SubTask/Edit/5
-
+        [HttpGet]
         public ActionResult Edit(int id = 0)
         {
-            ViewBag.Statuses = statusService.GetAll();
+            ViewBag.Statuses = _statusService.GetAll();
 
-            SubTask subtask = subTaskService.FindSingleBy(id);
+            SubTask subtask = _subTaskService.FindSingleBy(id, false);
             if (subtask == null)
             {
                 return HttpNotFound();
@@ -132,14 +94,13 @@ namespace TaskApplication.Controllers
         }
 
         //
-        // POST: /SubTask/Edit/5
-
-        [HttpPost]
+        // PUT: /SubTask/Edit/5
+        [HttpPut]
         public ActionResult Edit(SubTask subtask)
         {
             if (ModelState.IsValid)
             {
-                subTaskService.Edit(subtask);
+                _subTaskService.Edit(subtask);
                 return RedirectToAction("Edit", "Issue", new { id = subtask.IssueId });
             }
             return View(subtask);
@@ -147,10 +108,10 @@ namespace TaskApplication.Controllers
 
         //
         // GET: /SubTask/Delete/5
-
+        [HttpGet]
         public ActionResult Delete(int id = 0)
         {
-            SubTask subtask = subTaskService.FindSingleBy(id);
+            SubTask subtask = _subTaskService.FindSingleBy(id, false);
             if (subtask == null)
             {
                 return HttpNotFound();
@@ -159,14 +120,13 @@ namespace TaskApplication.Controllers
         }
 
         //
-        // POST: /SubTask/Delete/5
-
-        [HttpPost, ActionName("Delete")]
+        // Delete: /SubTask/Delete/5
+        [HttpDelete, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            var issueId = subTaskService.FindSingleBy(id).IssueId;
+            var issueId = _subTaskService.FindSingleBy(id, false).IssueId;
 
-            subTaskService.Delete(id);
+            _subTaskService.Delete(id);
             return RedirectToAction("Edit", "Issue", new { id = issueId });
         }
 
@@ -354,3 +314,46 @@ namespace TaskApplication.Controllers
          }*/
     }
 }
+
+////
+//// GET: /SubTask
+//[HttpGet]
+//public ActionResult Index()
+//{
+//    return View(_subTaskService.GetAll());
+//}
+
+////
+//// GET: /SubTask/Details/5
+//[HttpGet]
+//public ActionResult Details(int id = 0)
+//{
+//    SubTask subtask = _subTaskService.FindSingleBy(id);
+//    if (subtask == null)
+//    {
+//        return HttpNotFound();
+//    }
+//    return View(subtask);
+//}
+
+////
+//// GET: /SubTask/Create
+//[HttpGet]
+//public ActionResult Create()
+//{
+//    return View();
+//}
+
+////
+//// POST: /SubTask/Create
+//[HttpPost]
+//public ActionResult Create(SubTask subtask)
+//{
+//    if (ModelState.IsValid)
+//    {
+//        _subTaskService.Add(subtask);
+//        return RedirectToAction("Index");
+//    }
+
+//    return View(subtask);
+//}

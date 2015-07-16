@@ -8,7 +8,7 @@ using TaskApplication.Models;
 
 namespace TaskApplication.DataAccess.Repositories
 {
-    public class IssueReposiltory :
+    public class IssueRepository :
     GenericRepository<TaskContex, Issue>, IIssueRepository
     {
     }

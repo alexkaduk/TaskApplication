@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskApplication.Services.Interfaces;
-using TaskApplication.DataAccess.Repositories;
-using TaskApplication.DataAccess.Entities;
 using log4net;
+using TaskApplication.Common;
+using TaskApplication.DataAccess.Entities;
+using TaskApplication.DataAccess.Repositories;
+using TaskApplication.Services.Interfaces;
 
 namespace TaskApplication.Services.Concrete
 {
     public class SubTaskService : ISubTaskService
     {
         public static readonly ILog log = LogManager.GetLogger(typeof(SubTaskService));
+        
+        //private IssueRepository _issueReposiltory = new IssueRepository();
+        //private SubTaskRepository _subTaskReposiltory = new SubTaskRepository();
 
-        // private CategoryReposiltory categoryReposiltory = new CategoryReposiltory();
-        private IssueReposiltory issueReposiltory = new IssueReposiltory();
-        private SubTaskReposiltory subTaskReposiltory = new SubTaskReposiltory();
+        private readonly IIssueRepository _issueReposiltory = Ioc.Get<IIssueRepository>();
+        private readonly ISubTaskRepository _subTaskReposiltory = Ioc.Get<ISubTaskRepository>();
 
         public IEnumerable<SubTask> GetAll()
         {
             try
             {
-                return subTaskReposiltory.GetAll();
+                return _subTaskReposiltory.GetAll();
             }
             catch (Exception ex)
             {
@@ -35,7 +36,7 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                return subTaskReposiltory.FindBy(s => s.IssueId == id).ToList();
+                return _subTaskReposiltory.FindBy(s => s.IssueId == id).ToList();
             }
             catch (Exception ex)
             {
@@ -48,7 +49,7 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                return subTaskReposiltory.FindSingleBy(s => s.SubTaskId == id, isDetached);
+                return _subTaskReposiltory.FindSingleBy(s => s.SubTaskId == id, isDetached);
             }
             catch (Exception ex)
             {
@@ -70,7 +71,7 @@ namespace TaskApplication.Services.Concrete
                     subTask.StatusId = (int)Statuses.Open;
                 }
 
-                subTaskReposiltory.Save();
+                _subTaskReposiltory.Save();
             }
             catch (Exception ex)
             {
@@ -82,8 +83,8 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                subTaskReposiltory.Add(subTask);
-                subTaskReposiltory.Save();
+                _subTaskReposiltory.Add(subTask);
+                _subTaskReposiltory.Save();
             }
             catch (Exception ex)
             {
@@ -97,16 +98,16 @@ namespace TaskApplication.Services.Concrete
             {
                 var oldSubtask = FindSingleBy(subTask.SubTaskId, true);
                 subTask.IssueId = oldSubtask.IssueId;
-                subTaskReposiltory.Edit(subTask);
-                subTaskReposiltory.Save();
+                _subTaskReposiltory.Edit(subTask);
+                _subTaskReposiltory.Save();
 
-                var issue = issueReposiltory.FindSingleBy(i => i.IssueId == subTask.IssueId);
+                var issue = _issueReposiltory.FindSingleBy(i => i.IssueId == subTask.IssueId);
 
                 if (!issue.SubTasks.Where(s => s.StatusId == (int)Statuses.Open).Any())
                 {
                     issue.StatusId = (int)Statuses.Resolved;
 
-                    issueReposiltory.Save();
+                    _issueReposiltory.Save();
                 }
             }
             catch (Exception ex)
@@ -122,8 +123,8 @@ namespace TaskApplication.Services.Concrete
                 SubTask subTask = FindSingleBy(id);
                 if (subTask != null)
                 {
-                    subTaskReposiltory.Delete(subTask);
-                    subTaskReposiltory.Save();
+                    _subTaskReposiltory.Delete(subTask);
+                    _subTaskReposiltory.Save();
                 }
             }
             catch (Exception ex)

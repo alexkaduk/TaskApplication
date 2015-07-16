@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskApplication.Services.Interfaces;
-using TaskApplication.DataAccess.Repositories;
-using TaskApplication.DataAccess.Entities;
 using log4net;
+using TaskApplication.Common;
+using TaskApplication.DataAccess.Entities;
+using TaskApplication.DataAccess.Repositories;
+using TaskApplication.Services.Interfaces;
 
 namespace TaskApplication.Services.Concrete
 {
     public class CategoryService : ICategoryService
     {
         public static readonly ILog log = LogManager.GetLogger(typeof(CategoryService));
-        private CategoryReposiltory categoryReposiltory = new CategoryReposiltory();
-        private IssueReposiltory issueReposiltory = new IssueReposiltory();
+        
+        //private CategoryRepository _categoryReposiltory = new CategoryRepository();
+        //private IssueRepository _issueReposiltory = new IssueRepository();
+
+        private readonly ICategoryRepository _categoryReposiltory = Ioc.Get<ICategoryRepository>();
+        private readonly IIssueRepository _issueReposiltory = Ioc.Get<IIssueRepository>();
 
         public IEnumerable<Category> GetAll()
         {
             try
             {
-                return categoryReposiltory.GetAll();
+                return _categoryReposiltory.GetAll();
             }
             catch (Exception ex)
             {
@@ -33,7 +36,7 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                return categoryReposiltory.FindSingleBy(c => c.CategoryId == id);
+                return _categoryReposiltory.FindSingleBy(c => c.CategoryId == id);
             }
             catch (Exception ex)
             {
@@ -46,8 +49,8 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                categoryReposiltory.Add(category);
-                categoryReposiltory.Save();
+                _categoryReposiltory.Add(category);
+                _categoryReposiltory.Save();
             }
             catch (Exception ex)
             {
@@ -59,8 +62,8 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                categoryReposiltory.Edit(category);
-                categoryReposiltory.Save();
+                _categoryReposiltory.Edit(category);
+                _categoryReposiltory.Save();
             }
             catch (Exception ex)
             {
@@ -75,8 +78,8 @@ namespace TaskApplication.Services.Concrete
                 Category category = FindSingleBy(id);
                 if (category != null)
                 {
-                    categoryReposiltory.Delete(category);
-                    categoryReposiltory.Save();
+                    _categoryReposiltory.Delete(category);
+                    _categoryReposiltory.Save();
                 }
             }
             catch (Exception ex)
@@ -89,7 +92,7 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                return issueReposiltory.FindBy(i => i.CategoryId == id).Any();
+                return _issueReposiltory.FindBy(i => i.CategoryId == id).Any();
             }
             catch (Exception ex)
             {

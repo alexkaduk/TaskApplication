@@ -24,6 +24,7 @@
     </div>
 </fieldset>
 @using (Html.BeginForm()) {
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
     <p>
         <input type="submit" value="Delete" />
         @Html.ActionLink("Back to Issue", "Edit", "Issue", new { id = Model.IssueId }, null)

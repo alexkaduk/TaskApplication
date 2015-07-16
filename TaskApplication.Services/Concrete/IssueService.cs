@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskApplication.Services.Interfaces;
-using TaskApplication.DataAccess.Repositories;
-using TaskApplication.DataAccess.Entities;
 using log4net;
+using TaskApplication.Common;
+using TaskApplication.DataAccess.Entities;
+using TaskApplication.DataAccess.Repositories;
+using TaskApplication.Services.Interfaces;
 
 namespace TaskApplication.Services.Concrete
 {
     public class IssueService : IIssueService
     {
         public static readonly ILog log = LogManager.GetLogger(typeof(IssueService));
-        private IssueReposiltory issueReposiltory = new IssueReposiltory();
-        private StatusReposiltory statusReposiltory = new StatusReposiltory();
-        private SubTaskReposiltory subTaskReposiltory = new SubTaskReposiltory();
+        
+        //private IssueRepository _issueReposiltory = new IssueRepository();
+        //private StatusRepository _statusReposiltory = new StatusRepository();
+        //private SubTaskRepository _subTaskReposiltory = new SubTaskRepository();
+
+        private readonly IIssueRepository _issueReposiltory = Ioc.Get<IIssueRepository>();
+        private readonly IStatusRepository _statusReposiltory = Ioc.Get<IStatusRepository>();
+        private readonly ISubTaskRepository _subTaskReposiltory = Ioc.Get<ISubTaskRepository>();
 
         public IEnumerable<Issue> GetAll()
         {
             try
             {
-                return issueReposiltory.GetAll().OrderBy(i => i.CategoryId);
+                return _issueReposiltory.GetAll().OrderBy(i => i.CategoryId);
             }
             catch (Exception ex)
             {
@@ -35,7 +39,7 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                return issueReposiltory.FindSingleBy(i => i.IssueId == id);
+                return _issueReposiltory.FindSingleBy(i => i.IssueId == id);
             }
             catch (Exception ex)
             {
@@ -50,10 +54,10 @@ namespace TaskApplication.Services.Concrete
             try
             {
                 issue.IssueCreateDate = issue.IssueUpdateDate = DateTime.Now;
-                issue.StatusId = statusReposiltory.FindSingleBy(s => s.StatusName == "Open").StatusId;
+                issue.StatusId = _statusReposiltory.FindSingleBy(s => s.StatusName == "Open").StatusId;
 
-                issueReposiltory.Add(issue);
-                issueReposiltory.Save();
+                _issueReposiltory.Add(issue);
+                _issueReposiltory.Save();
             }
             catch (Exception ex)
             {
@@ -65,13 +69,13 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                Issue oldIssue = issueReposiltory.FindSingleBy(i => i.IssueId == issue.IssueId, true);
+                Issue oldIssue = _issueReposiltory.FindSingleBy(i => i.IssueId == issue.IssueId, true);
 
                 issue.IssueCreateDate = oldIssue.IssueCreateDate;
                 issue.IssueUpdateDate = DateTime.Now;
 
-                issueReposiltory.Edit(issue);
-                issueReposiltory.Save();
+                _issueReposiltory.Edit(issue);
+                _issueReposiltory.Save();
             }
             catch (Exception ex)
             {
@@ -86,8 +90,8 @@ namespace TaskApplication.Services.Concrete
                 Issue issue = FindSingleBy(id);
                 if (issue != null)
                 {
-                    issueReposiltory.Delete(issue);
-                    issueReposiltory.Save();
+                    _issueReposiltory.Delete(issue);
+                    _issueReposiltory.Save();
                 }
             }
             catch (Exception ex)
@@ -100,7 +104,7 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                return subTaskReposiltory.FindBy(s => s.IssueId == id).Any();
+                return _subTaskReposiltory.FindBy(s => s.IssueId == id).Any();
             }
             catch (Exception ex)
             {
@@ -113,7 +117,7 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                return issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).Any();
+                return _issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).Any();
             }
             catch (Exception ex)
             {
@@ -126,7 +130,7 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                return issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).ToList();
+                return _issueReposiltory.FindBy(i => i.StatusId == (int)Statuses.Resolved).ToList();
             }
             catch (Exception ex)
             {
@@ -142,14 +146,14 @@ namespace TaskApplication.Services.Concrete
                 var resovledIssues = GetAllResolved();
                 foreach (Issue issue in resovledIssues)
                 {
-                    foreach (var subtask in issue.SubTasks.ToArray())
+                    foreach (SubTask subtask in issue.SubTasks.ToArray())
                     {
-                        subTaskReposiltory.Delete(subtask);
+                        _subTaskReposiltory.Delete(subtask);
                     }
-                    issueReposiltory.Delete(issue);
+                    _issueReposiltory.Delete(issue);
                 }
-                subTaskReposiltory.Save();
-                issueReposiltory.Save();
+                _subTaskReposiltory.Save();
+                _issueReposiltory.Save();
             }
             catch (Exception ex)
             {
@@ -164,7 +168,7 @@ namespace TaskApplication.Services.Concrete
                 if (issue.SubTasks.All(s => s.StatusId == (int)Statuses.Resolved))
                 {
                     issue.StatusId = (int)Statuses.Resolved;
-                    issueReposiltory.Save();
+                    _issueReposiltory.Save();
                     return true;
                 }
                 return false;

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TaskApplication.DataAccess.Entities;
 
 namespace TaskApplication.Services.Interfaces
 {
-    interface ISubTaskService
+    public interface ISubTaskService
     {
         IEnumerable<SubTask> GetAll();
         IEnumerable<SubTask> GetAllByIssueId(int id);
@@ -16,6 +12,8 @@ namespace TaskApplication.Services.Interfaces
         void Add(SubTask subTask);
         void Edit(SubTask subTask);
         void Delete(int id);
+
+        //public SubTask FindSingleBy(int id, bool isDetached = false)
         //bool IsUsed(int id);
     }
 }

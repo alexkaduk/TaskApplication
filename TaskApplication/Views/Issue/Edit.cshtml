@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
-
+    @Html.HttpMethodOverride(HttpVerbs.Put)
     <fieldset>
         <legend>Issue</legend>
 

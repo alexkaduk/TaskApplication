@@ -73,6 +73,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TaskApplication.Common\TaskApplication.Common.csproj">
+      <Project>{54744158-389a-4b48-8457-870ed85f553b}</Project>
+      <Name>TaskApplication.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaskApplication.DataAccess\TaskApplication.DataAccess.csproj">
       <Project>{8fd11394-491d-439e-bc4d-c0016974a678}</Project>
       <Name>TaskApplication.DataAccess</Name>

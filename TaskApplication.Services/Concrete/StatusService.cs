@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskApplication.Services.Interfaces;
-using TaskApplication.DataAccess.Repositories;
-using TaskApplication.DataAccess.Entities;
 using log4net;
+using TaskApplication.Common;
+using TaskApplication.DataAccess.Entities;
+using TaskApplication.DataAccess.Repositories;
+using TaskApplication.Services.Interfaces;
 
 namespace TaskApplication.Services.Concrete
 {
     public class StatusService : IStatusService
     {
         public static readonly ILog log = LogManager.GetLogger(typeof(StatusService));
-        private StatusReposiltory statusReposiltory = new StatusReposiltory();
+        
+        //private StatusRepository _statusReposiltory = new StatusRepository();
 
+        private readonly IStatusRepository _statusReposiltory = Ioc.Get<IStatusRepository>();
+        
         public IEnumerable<Status> GetAll()
         {
             try
             {
-                return statusReposiltory.GetAll();
+                return _statusReposiltory.GetAll();
             }
             catch (Exception ex)
             {
@@ -32,7 +33,7 @@ namespace TaskApplication.Services.Concrete
         {
             try
             {
-                return statusReposiltory.FindSingleBy(s => s.StatusId == id);
+                return _statusReposiltory.FindSingleBy(s => s.StatusId == id);
             }
             catch (Exception ex)
             {

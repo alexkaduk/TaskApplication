@@ -144,6 +144,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -365,12 +369,15 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TaskApplication.Common\TaskApplication.Common.csproj">
+      <Project>{54744158-389a-4b48-8457-870ed85f553b}</Project>
+      <Name>TaskApplication.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaskApplication.DataAccess\TaskApplication.DataAccess.csproj">
       <Project>{8fd11394-491d-439e-bc4d-c0016974a678}</Project>
       <Name>TaskApplication.DataAccess</Name>

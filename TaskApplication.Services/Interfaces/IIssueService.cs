@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TaskApplication.DataAccess.Entities;
 
 namespace TaskApplication.Services.Interfaces
 {
-    interface IIssueService
+    public interface IIssueService
     {
         IEnumerable<Issue> GetAll();
         Issue FindSingleBy(int id);
@@ -18,5 +14,6 @@ namespace TaskApplication.Services.Interfaces
         bool IsAnyResolved();
         IEnumerable<Issue> GetAllResolved();
         void DeleteAllResolved();
+        bool ChangeStatusIfAllSubTasksResolved(Issue issue);
     }
 }

@@ -8,7 +8,7 @@ using TaskApplication.Models;
 
 namespace TaskApplication.DataAccess.Repositories
 {
-    public class SubTaskReposiltory :
+    public class SubTaskRepository :
     GenericRepository<TaskContex, SubTask>, ISubTaskRepository
     {
     }
